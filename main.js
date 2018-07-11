@@ -1,3 +1,9 @@
+$(document).ready(initializeApp);
+
+function initializeApp(){
+$(".playerOne").click(activateClickHandlers);
+$(".playerTwo").click(activateClickHandlers);
+}
 
 var gameBoardArray = [
     [0, 1, 0, 1, 0, 1, 0, 1],
@@ -50,13 +56,13 @@ function addGamePieces(array) {
             } else if (array[i][j] === 1) {
 
                 var squareOne = squares[i * 8 + j];
-                $(squareOne).append("<div class='playerOne'></div>");
+                $(squareOne).append("<div class='playerOne piece'></div>");
                 console.log("array value at 1: ", array[i][j]);
 
             }
              else if (array[i][j] === 2) {
                 var squareTwo = squares[i * 8 + j];
-                $(squareTwo).append("<div class='playerTwo'></div>");
+                $(squareTwo).append("<div class='playerTwo piece'></div>");
                 console.log("array value at 2: ", array[i][j]);
             }
         }
@@ -65,3 +71,26 @@ function addGamePieces(array) {
 }
 
 addGamePieces(gameBoardArray);
+
+function activateClickHandlers() {
+    var selected;
+    var playerTurn = ($(this).attr("class").split(' ')[0]);
+    if(playerTurn) {
+      if($(this).hasClass('selected')) {
+          selected = true;
+          $('.piece').each(function(index){
+          $('.piece').eq(index).removeClass('selected')})};
+      if(!selected) {
+        $(this).addClass('selected');
+    }
+}
+}
+
+//NEED TO ADD $(this).removeClass('selected') to MOVE FUNCTION after piece is moved; 
+
+
+var removePiece = function () {
+    // $(this).css("display", "none");
+    gameBoardArray[this.attr("columnPosition")][this.attr("rowPosition")] = 0;
+
+  }
