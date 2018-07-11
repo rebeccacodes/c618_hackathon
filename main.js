@@ -86,12 +86,12 @@ function removePlayerTwoModal(){
 function changePlayer(){
     if (player = 1){
         player = 2;
-    showPlayerOneModal();
-
+        showPlayerOneModal();
+        setTimeout(removePlayerOneModal(), 1000);
     }
     if (player =2){
         player = 1;
-    showPlayerTwoModal();
-
+        showPlayerTwoModal();
+        setTimeout(removePlayerTwoModal(), 1000);
     }
 }
