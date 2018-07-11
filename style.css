@@ -78,3 +78,11 @@
     font-size: 40px;
 }
 
+
+.selected {
+    box-shadow: 0 0 20px 7px white; 
+}
+
+.piece:hover{
+    box-shadow: 0 0 20px 7px grey; 
+}
