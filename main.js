@@ -39,7 +39,8 @@ function buildGameBoard(array) {
 buildGameBoard(gameBoardArray);
 
 function addGamePieces(array) {
-
+    var squares = $('.square');
+    
     for (var i = 0; i < array.length; i++) {
 
         for (var j = 0; j < array.length; j++) {
@@ -47,19 +48,16 @@ function addGamePieces(array) {
                 console.log("array value at 0: ", array[i][j]);
 
             } else if (array[i][j] === 1) {
-                var playerOnePiece = $("<div>", {
-                    class: "playerOne",
 
-                })
+                var squareOne = squares[i * 8 + j];
+                $(squareOne).append("<div class='playerOne'></div>");
                 console.log("array value at 1: ", array[i][j]);
-                $('.square').append(playerOnePiece);
-            } else if ([i][j] === 2) {
-                var playerTwoPiece = $("<div>", {
-                    class: "playerTwo",
 
-                })
+            }
+             else if (array[i][j] === 2) {
+                var squareTwo = squares[i * 8 + j];
+                $(squareTwo).append("<div class='playerTwo'></div>");
                 console.log("array value at 2: ", array[i][j]);
-                $('.square').append(playerTwoPiece);
             }
         }
 
