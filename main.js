@@ -9,7 +9,8 @@ function startupGame() {
 }
 
 function activateClickHandlers() {
-    $(".dark").click(movePiece);
+    $(".playerOne").click(movePiece);
+    $(".playerTwo").click(movePiece);
 }
 var gameBoardArray = [
     [0, 1, 0, 1, 0, 1, 0, 1],
@@ -36,6 +37,8 @@ function buildGameBoard(array) {
                     class: "light square",
                     columnPosition: j
                 })
+                var nestedDiv = $('<div>').addClass('empty');
+                gridSquare.append(nestedDiv);
                 gridRow.append(gridSquare);
             } else if (alternate === 0) {
                 var gridSquare1 = $("<div>", {
@@ -43,6 +46,8 @@ function buildGameBoard(array) {
                     columnPosition: j,
                     rowPosition: i
                 })
+                var nestedDiv = $('<div>').addClass('empty');
+                gridSquare1.append(nestedDiv);
                 gridRow.append(gridSquare1);
             }
 
@@ -54,25 +59,30 @@ function buildGameBoard(array) {
 }
 
 function addGamePieces(array) {
-    var squares = $('.square');
+
 
     for (var i = 0; i < array.length; i++) {
 
         for (var j = 0; j < array.length; j++) {
+
+            var storePosition = `div[rowPosition=${i}][columnPosition=${j}]>div`;
+
+
             if (array[i][j] === 0) {
-                //console.log("array value at 0: ", array[i][j]);
 
             } else if (array[i][j] === 1) {
 
-                var squareOne = squares[i * 8 + j];
-                $(squareOne).append("<div class='playerOne'></div>");
+                //var squareOne = squares[i * 8 + j];
+                //$('.empty').addClass('playerOne')
                 //console.log("array value at 1: ", array[i][j]);
+                $(storePosition).addClass('playerOne');
 
             }
             else if (array[i][j] === 2) {
-                var squareTwo = squares[i * 8 + j];
-                $(squareTwo).append("<div class='playerTwo'></div>");
+                // var squareTwo = squares[i * 8 + j];
+                //$('.empty').addClass('playerTwo')
                 //console.log("array value at 2: ", array[i][j]);
+                $(storePosition).addClass('playerTwo');
             }
         }
 
@@ -81,40 +91,48 @@ function addGamePieces(array) {
 
 function movePiece() {
     //verify whose turn it is
-    console.log('click function works');
 
+    //identify square that was clicked
     var pieceToMove = $(this);
+    console.log("piece to move", pieceToMove);
+    var check = pieceToMove.find('div');
+    console.log("what is this", pieceToMove);
 
-    //identify square that was clicked and make sure it has a piece on it
-    //get the rowPosition and columnPosition
+    //and make sure it has a piece on it
+    if (check.hasClass('playerOne')) {
+        console.log('player one exists');
+    }
+    //get the rowPosition and columnPosition of the piece to move
     var column = pieceToMove.attr('columnPosition');
     var row = pieceToMove.attr('rowPosition');
     column = parseInt(column);
     row = parseInt(row);
+    // coordinate the array position with the div that was selected
+    // var arrayPositionValue = gameBoardArray[row][column];
+    // console.log("arrayPositionValue: ", arrayPositionValue);
 
-    var arrayPositionValue = gameBoardArray[row][column];
-    console.log("arrayPositionValue: ", arrayPositionValue);
-
-
-
-
-    var check = pieceToMove.find('div');
-
-    if (check.hasClass('playerOne')) {
-        console.log('player one exists');
-    }
     //identify square that was clicked to move the piece to
+
     var placeToMoveTo = $(this);
-    var checkNewSquare = pieceToMove.find('div');
+    console.log("placeToMoveTo:", placeToMoveTo);
+    var checkNewSquare = placeToMoveTo.find('div');
+    var check = placeToMoveTo.find('div');
 
     if (check.hasClass('playerOne') || check.hasClass('playerTwo')) {
         console.log('a player is on this spot');
+    } else {
+        //get the rowPosition and columnPosition
+        var newColumn = placeToMoveTo.attr('columnPosition');
+        var newRow = placeToMoveTo.attr('rowPosition');
+        newColumn = parseInt(newColumn);
+        newRow = parseInt(newRow);
+        //update the array so that the old square is now 0 and the new square now has the current player's number
+        pieceToMove.removeClass('playerOne');
+        //gameBoardArray[row][column] = 4;
+        gameBoardArray[newRow][newColumn] = 1;
+        console.log(gameBoardArray);
+
     }
-
-    //get the rowPosition and columnPosition
-
-    //update the array so that the old square is now 0 and the new square now has the current player's number
-
-
+    addGamePieces(gameBoardArray);
     //once array is updated, run add game pieces again
 }
