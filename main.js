@@ -1,3 +1,4 @@
+var player = 1;
 
 var gameBoardArray = [
     [0, 1, 0, 1, 0, 1, 0, 1],
@@ -65,3 +66,32 @@ function addGamePieces(array) {
 }
 
 addGamePieces(gameBoardArray);
+
+function showPlayerOneModal(){
+    $('.shadow1').addClass('show');
+}
+
+function showPlayerTwoModal(){
+    $('.shadow2').addClass('show');
+}
+
+function removePlayerOneModal(){
+    $('.shadow1').removeClass('show');
+}
+
+function removePlayerTwoModal(){
+    $('.shadow2').removeClass('show');
+}
+
+function changePlayer(){
+    if (player = 1){
+        player = 2;
+    showPlayerOneModal();
+
+    }
+    if (player =2){
+        player = 1;
+    showPlayerTwoModal();
+
+    }
+}
