@@ -1,0 +1,38 @@
+#game-board {
+    height: 600px;
+    width: 600px;
+    margin: auto;
+}
+
+.row {
+    display: flex;
+    height: 12.5%;
+}
+
+.square {
+    display: inline-block;
+    height: 100%;
+    width: 12.5%;
+}
+
+.light {
+    background-color: #ffc600;
+}
+
+.dark {
+    background-color: #2f3a3b;
+}
+
+.checker {
+    height: 75px;
+}
+
+.playerOne {
+    background-image: url("images/white-plain.png");
+    /* background-size: contain; */
+}
+
+.playerTwo {
+    background-image: url("images/black-plain.png");
+    /* background-size: contain; */
+}
