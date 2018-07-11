@@ -39,3 +39,11 @@
     width: 100%;
     height: 100%;
     background-size: contain;}
+
+.selected {
+    box-shadow: 0 0 20px 7px white; 
+}
+
+.piece:hover{
+    box-shadow: 0 0 20px 7px grey; 
+}
