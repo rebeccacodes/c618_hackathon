@@ -9,8 +9,21 @@ function startupGame() {
 }
 
 function activateClickHandlers() {
-  $(".playerOne").click(activateClickHandlers);
-  $(".playerTwo").click(activateClickHandlers);
+    $(".playerOne").click(movePiece);
+    $(".playerTwo").click(movePiece);
+    // var selected;
+    // var playerTurn = ($(this).attr("class").split(' ')[0]);
+    // if (playerTurn) {
+    //     if ($(this).hasClass('selected')) {
+    //         selected = true;
+    //         $('.piece').each(function (index) {
+    //             $('.piece').eq(index).removeClass('selected')
+    //         })
+    //     };
+    //     if (!selected) {
+    //         $(this).addClass('selected');
+    //     }
+    // }
 }
 var gameBoardArray = [
     [0, 1, 0, 1, 0, 1, 0, 1],
@@ -60,59 +73,22 @@ function buildGameBoard(array) {
 
 function addGamePieces(array) {
 
-
     for (var i = 0; i < array.length; i++) {
-
         for (var j = 0; j < array.length; j++) {
-
             var storePosition = `div[rowPosition=${i}][columnPosition=${j}]>div`;
-
 
             if (array[i][j] === 0) {
 
             } else if (array[i][j] === 1) {
-
-
-                var squareOne = squares[i * 8 + j];
-                $(squareOne).append("<div class='playerOne piece'></div>");
-                console.log("array value at 1: ", array[i][j]);
-
-            }
-             else if (array[i][j] === 2) {
-                var squareTwo = squares[i * 8 + j];
-                $(squareTwo).append("<div class='playerTwo piece'></div>");
-                console.log("array value at 2: ", array[i][j]);
-
-                //var squareOne = squares[i * 8 + j];
-                //$('.empty').addClass('playerOne')
-                //console.log("array value at 1: ", array[i][j]);
                 $(storePosition).addClass('playerOne');
-
             }
             else if (array[i][j] === 2) {
-                // var squareTwo = squares[i * 8 + j];
-                //$('.empty').addClass('playerTwo')
-                //console.log("array value at 2: ", array[i][j]);
                 $(storePosition).addClass('playerTwo');
             }
+            else if (array[i][j] === 2) {
+            }
         }
-
     }
-}
-
-
-function activateClickHandlers() {
-    var selected;
-    var playerTurn = ($(this).attr("class").split(' ')[0]);
-    if(playerTurn) {
-      if($(this).hasClass('selected')) {
-          selected = true;
-          $('.piece').each(function(index){
-          $('.piece').eq(index).removeClass('selected')})};
-      if(!selected) {
-        $(this).addClass('selected');
-    }
-}
 }
 
 //NEED TO ADD $(this).removeClass('selected') to MOVE FUNCTION after piece is moved; 
@@ -122,11 +98,11 @@ var removePiece = function () {
     // $(this).css("display", "none");
     gameBoardArray[this.attr("columnPosition")][this.attr("rowPosition")] = 0;
 
-  }
+}
 
 function movePiece() {
     //verify whose turn it is
-
+    console.log("move piece function");
     //identify square that was clicked
     var pieceToMove = $(this);
     console.log("piece to move", pieceToMove);
