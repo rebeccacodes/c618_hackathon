@@ -10,6 +10,7 @@ var row = null;
 var possibleMove1;
 var possibleMove2;
 var counter = 0;
+var winner = false;
 
 var gameBoardArray = [
     [0, 1, 0, 1, 0, 1, 0, 1],
@@ -26,6 +27,7 @@ function startupGame() {
     buildGameBoard(gameBoardArray);
     addGamePieces(gameBoardArray);
     activateClickHandlers();
+
 }
 
 function activateClickHandlers() {
@@ -37,9 +39,7 @@ function checkPlayerTurn() {
         if (check.hasClass('playerTwo')) {
             firstClickedPosition = null;
             check = null;
-            alert("Player One's Turn");
-            // showPlayerTwoModal()
-            // setTimeout(removePlayerTwoModal(), 1000);
+            showPlayerOneModal()
         } else {
             console.log("check passed");
         }
@@ -47,9 +47,7 @@ function checkPlayerTurn() {
         if (check.hasClass('playerOne')) {
             firstClickedPosition = null;
             check = null;
-            alert("Player Two's Turn");
-            // showPlayerOneModal();
-            // setTimeout(removePlayerOneModal(), 1000);
+            showPlayerTwoModal();
 
         } else {
             console.log("check passed");
@@ -58,20 +56,22 @@ function checkPlayerTurn() {
 }
 
 function showPlayerOneModal() {
-    $('.shadow1').addClass('show');
+    $('.shadow1').css('display', 'inline-block');
 }
 
-function removePlayerOneModal() {
-    $('.shadow1').removeClass('show');
-}
+/*function removePlayerOneModal() {
+    $('.shadow1').css('display', 'none');
+}*/
 
 function showPlayerTwoModal() {
-    $('.shadow2').addClass('show');
+    $('.shadow2').css('display', 'inline-block');
 }
 
+/*
 function removePlayerTwoModal() {
-    $('.shadow2').removeClass('show');
+    $('.shadow2').css('display', 'none');
 }
+*/
 
 function buildGameBoard(array) {
     var gameBoard = $('#game-board');
@@ -218,8 +218,48 @@ this.remove = function () {
     // CODE FOR APPENDING PIECE TO STATS
     if(player == 1) {$('#player2').append("<div class='capturedPiece'></div>")};
     if(player == 2) {$('#player1').append("<div class='capturedPiece'></div>")};
-  }
+}
 
+function checkForWinner(){
+    //while the winner variable is false runs the loop
+    var counterOne = 0;
+    var counterTwo = 0;
+    while (winner = false){
+        for (var i = 0; i<gameBoardArray.length; i++){
+            for (var j = 0; j<gameBoardArray.length; j++){
+                if(gameBoardArray[i][j] === 1){
+                    counterOne++;
+                    console.log(counterOne);
+                } else if(gameBoardArray[i][j] === 2){
+                    counterTwo++;
+                    console.log(counterTwo);
+                }
+            }
+        }
+        if( counterOne === 0){
+            playerTwoWins();
+            winner = true;
+        }
+        if( counterTwo === 0 ){
+            playerOneWins()
+            winner = true;
+        } else{
+            counterOne = 0;
+            counterTwo = 0;
+            console.log('breaking out of loop');
+            break;
+        }
+    }
+}
+
+function playerOneWins(){
+    //temp
+    alert('P1 wins');
+}
+function playerTwoWins(){
+    //temp
+    alert('P2 wins');
+}
 
 
 
