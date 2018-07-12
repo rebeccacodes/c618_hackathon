@@ -51,7 +51,7 @@ function checkPlayerTurn() {
         if (check.hasClass('playerTwo')) {
             firstClickedPosition = null;
             check = null;
-            //showPlayerOneModal()
+            showPlayerOneModal()
         } else {
             console.log("check passed");
         }
@@ -59,7 +59,7 @@ function checkPlayerTurn() {
         if (check.hasClass('playerOne')) {
             firstClickedPosition = null;
             check = null;
-            // showPlayerTwoModal();
+            showPlayerTwoModal();
 
         } else {
             console.log("check passed");
