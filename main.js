@@ -298,10 +298,10 @@ function remove() {
     // CODE FOR APPENDING PIECE TO STATS
     if (player === 0) { $('#player2').append("<div class='capturedPiece'></div>") };
     if (player === 1) { $('#player1').append("<div class='capturedPiece'></div>") };
-}
+    }
     if(player == 1) {$('#player2').append("<div class='capturedPiece'></div>")};
     if(player == 2) {$('#player1').append("<div class='capturedPiece'></div>")};
-}
+
 
 function checkForWinner(){
     //while the winner variable is false runs the loop
