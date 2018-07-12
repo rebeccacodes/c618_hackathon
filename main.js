@@ -13,19 +13,22 @@ function startupGame() {
 function activateClickHandlers() {
     $(".playerOne").click(movePiece);
     $(".playerTwo").click(movePiece);
-    // var selected;
-    // var playerTurn = ($(this).attr("class").split(' ')[0]);
-    // if (playerTurn) {
-    //     if ($(this).hasClass('selected')) {
-    //         selected = true;
-    //         $('.piece').each(function (index) {
-    //             $('.piece').eq(index).removeClass('selected')
-    //         })
-    //     };
-    //     if (!selected) {
-    //         $(this).addClass('selected');
-    //     }
-    // }
+    $(".piece").click(movePiece);
+}
+function selectHandler(){
+    var selected;
+    var playerTurn = ($(this).attr("class").split(' ')[0]);
+    if (playerTurn) {
+        if ($(this).hasClass('selected')) {
+            selected = true;
+            $('.piece').each(function (index) {
+                $('.piece').eq(index).removeClass('selected')
+            })
+        };
+        if (!selected) {
+            $(this).addClass('selected');
+        }
+    }
 }
 var gameBoardArray = [
     [0, 1, 0, 1, 0, 1, 0, 1],
@@ -82,10 +85,10 @@ function addGamePieces(array) {
             if (array[i][j] === 0) {
 
             } else if (array[i][j] === 1) {
-                $(storePosition).addClass('playerOne');
+                $(storePosition).addClass('playerOne piece');
             }
             else if (array[i][j] === 2) {
-                $(storePosition).addClass('playerTwo');
+                $(storePosition).addClass('playerTwo piece');
             }
             else if (array[i][j] === 2) {
             }
