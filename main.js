@@ -9,12 +9,18 @@ var column = null;
 var row = null;
 var possibleMove1;
 var possibleMove2;
+var possibleMove3;
+var possibleMove4;
 var counter = 0;
-var playerCount1 = 0;
-var playerCount2 = 0;
-var all_pieces_captured = 12;
-
 var winner = false;
+
+var checkChildDiv1;
+var checkChildDiv2;
+var checkChildDiv3;
+var checkChildDiv4;
+
+var playerOnePoints = 0;
+var playerTwoPoints = 0;
 
 var gameBoardArray = [
     [0, 1, 0, 1, 0, 1, 0, 1],
@@ -36,9 +42,6 @@ function startupGame() {
 
 function activateClickHandlers() {
     $(".dark").click(pieceClicked);
-    $(".playerOne").click(selected);
-    $(".playerTwo").click(selected);
-
 }
 
 function checkPlayerTurn() {
@@ -63,14 +66,7 @@ function checkPlayerTurn() {
 }
 
 function showPlayerOneModal() {
-    $('.shadow1').addClass("visible");
-    $(document).click(function(event) {
-        //if you click on anything except the modal itself or the "open modal" link, close the modal
-        if (!$(event.target).closest(".shadow1").length) {
-          $("body").find(".shadow1").removeClass("visible");
-        }
-      });
-      
+    $('.shadow1').css('display', 'inline-block');
 }
 
 /*function removePlayerOneModal() {
@@ -78,13 +74,8 @@ function showPlayerOneModal() {
 }*/
 
 function showPlayerTwoModal() {
-    $('.shadow2').addClass("visible");
-    $(document).click(function(event) {
-        //if you click on anything except the modal itself or the "open modal" link, close the modal
-        if (!$(event.target).closest(".shadow2").length) {
-          $("body").find(".shadow2").removeClass("visible");
-        }
-      });}
+    $('.shadow2').css('display', 'inline-block');
+}
 
 /*
 function removePlayerTwoModal() {
@@ -162,6 +153,7 @@ function pieceClicked() {
         check = firstClickedPosition.find('div');
 
         checkPlayerTurn();
+
         if (check.hasClass('playerOne') || check.hasClass('playerTwo')) {
 
             var column = firstClickedPosition.attr('columnPosition');
@@ -169,8 +161,6 @@ function pieceClicked() {
             console.log('column row', column, row);
             column = parseInt(column);
             row = parseInt(row);
-
-
 
             if (check.hasClass('playerOne')) {
 
@@ -194,8 +184,38 @@ function pieceClicked() {
 
             }
 
-            possibleMove1 = $(`div[rowPosition = ${possibleMoveRow}][columnPosition = ${possibleMoveColumnLeft}]`).addClass("highLight");
-            possibleMove2 = $(`div[rowPosition = ${possibleMoveRow}][columnPosition = ${possibleMoveColumnRight}]`).addClass("highLight");
+            possibleMove1 = $(`div[rowPosition = ${possibleMoveRow}][columnPosition = ${possibleMoveColumnLeft}]`);
+            possibleMove2 = $(`div[rowPosition = ${possibleMoveRow}][columnPosition = ${possibleMoveColumnRight}]`);
+            possibleMove3 = $(`div[rowPosition = ${possibleMoveRow2}][columnPosition = ${possibleMoveColumnLeft2}]`);
+            possibleMove4 = $(`div[rowPosition = ${possibleMoveRow2}][columnPosition = ${possibleMoveColumnRight2}]`);
+
+            //finding child divs of possible moves
+            checkChildDiv1 = possibleMove1.find('div');
+            checkChildDiv2 = possibleMove2.find('div');
+            checkChildDiv3 = possibleMove3.find('div');
+            checkChildDiv4 = possibleMove4.find('div');
+            //checking if there are pieces on the possible move locations
+
+            if (!checkChildDiv1.hasClass('playerOne') && (!checkChildDiv1.hasClass('playerTwo'))) {
+                possibleMove1.addClass('highLight');
+            }
+            if (!checkChildDiv2.hasClass('playerOne') && (!checkChildDiv2.hasClass('playerTwo'))) {
+                possibleMove2.addClass('highLight');
+            }
+
+            if (checkChildDiv1.hasClass('playerOne') || (checkChildDiv1.hasClass('playerTwo'))) {
+                if (!checkChildDiv3.hasClass('playerOne') && (!checkChildDiv3.hasClass('playerTwo')))
+                    possibleMove3.addClass('highLight');
+                possibleMove3.addClass('jumpLeft');
+
+            }
+
+            if (checkChildDiv2.hasClass('playerOne') || (checkChildDiv2.hasClass('playerTwo'))) {
+                if (!checkChildDiv4.hasClass('playerOne') && (!checkChildDiv4.hasClass('playerTwo')))
+                    possibleMove4.addClass('highLight');
+                possibleMove4.addClass('jumpRight');
+
+            }
 
             gameBoardArray[row][column] = 0;
 
@@ -204,21 +224,49 @@ function pieceClicked() {
         }
     } else if (secondClickedPosition === null) {
         secondClickedPosition = $(this);
-        console.log("secondClickedPosition ", secondClickedPosition)
         movePiece();
     }
 }
 
 function movePiece() {
+
     var checkNewSquare = secondClickedPosition.find('div');
-    if (checkNewSquare.hasClass('playerOne') || checkNewSquare.hasClass('playerTwo')) {
-        console.log('a player is on this spot');
-    } else if (secondClickedPosition.hasClass('highLight')) {
+    if (secondClickedPosition.hasClass('highLight')) {
 
         var newColumn = secondClickedPosition.attr('columnPosition');
         var newRow = secondClickedPosition.attr('rowPosition');
         newColumn = parseInt(newColumn);
         newRow = parseInt(newRow);
+
+        if (secondClickedPosition.hasClass('jumpLeft')) {
+            console.log('you were jumped');
+            console.log("checkChildDiv1", checkChildDiv1)
+            checkChildDiv1.removeClass('playerOne');
+            checkChildDiv1.removeClass('playerTwo');
+            if (player === 0) {
+                gameBoardArray[newRow - 1][newColumn - 1] = 0;
+                playerOnePoints++
+            } else if (player === 1) {
+                gameBoardArray[newRow - 1][newColumn + 1] = 0;
+                playerTwoPoints++
+            }
+        }
+
+        if (secondClickedPosition.hasClass('jumpRight')) {
+            console.log('you were jumped');
+            console.log("checkChildDiv2", checkChildDiv2)
+            checkChildDiv2.removeClass('playerOne');
+            checkChildDiv2.removeClass('playerTwo');
+            if (player === 0) {
+                gameBoardArray[newRow - 1][newColumn - 1] = 0;
+                playerOnePoints++
+            } else if (player === 1) {
+                gameBoardArray[newRow - 1][newColumn + 1] = 0;
+                playerTwoPoints++
+            }
+        }
+
+
 
         if (check.hasClass('playerOne')) {
             gameBoardArray[newRow][newColumn] = 1;
@@ -226,35 +274,34 @@ function movePiece() {
             gameBoardArray[newRow][newColumn] = 2;
         }
 
-        check.removeClass('playerOne selected');
-        check.removeClass('playerTwo selected');
+        check.removeClass('playerOne');
+        check.removeClass('playerTwo');
 
-        addGamePieces(gameBoardArray);
+
+        console.log(gameBoardArray);
 
         $(possibleMove1).removeClass('highLight');
         $(possibleMove2).removeClass('highLight');
+        $(possibleMove3).removeClass('highLight');
+        $(possibleMove4).removeClass('highLight');
 
         firstClickedPosition = null;
         secondClickedPosition = null;
-
+        //buildGameBoard(gameBoardArray);
+        addGamePieces(gameBoardArray);
         player = 1 - player;
         counter = 0;
     }
 }
 
-function remove () {
+function remove() {
     // CODE FOR APPENDING PIECE TO STATS
-
-    if(check.hasClass('playerOne')) {
-        $('#player1').append("<div class='capturedPiece'></div>");
-        playerCount1++;
-    };
-    if(check.hasClass('playerTwo')) {
-        $('#player2').append("<div class='capturedPiece'></div>");
-        playerCount2++;
-    };
-  }
-
+    if (player === 0) { $('#player2').append("<div class='capturedPiece'></div>") };
+    if (player === 1) { $('#player1').append("<div class='capturedPiece'></div>") };
+}
+    if(player == 1) {$('#player2').append("<div class='capturedPiece'></div>")};
+    if(player == 2) {$('#player1').append("<div class='capturedPiece'></div>")};
+}
 
 function checkForWinner(){
     //while the winner variable is false runs the loop
@@ -290,6 +337,7 @@ function checkForWinner(){
 
 
 
+
   function selected() {
     var selected;
     var playerTurn = ($(this).attr("class").split(' ')[0]);
@@ -319,6 +367,9 @@ function win(){
 function resetGame(){
         window.location.reload();
 }
+
+
+
 
 
 
