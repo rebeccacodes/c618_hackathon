@@ -10,6 +10,10 @@ var row = null;
 var possibleMove1;
 var possibleMove2;
 var counter = 0;
+var playerCount1 = 0;
+var playerCount2 = 0;
+var all_pieces_captured = 12;
+
 
 var gameBoardArray = [
     [0, 1, 0, 1, 0, 1, 0, 1],
@@ -30,16 +34,21 @@ function startupGame() {
 
 function activateClickHandlers() {
     $(".dark").click(pieceClicked);
+    $(".playerOne").click(selected);
+    $(".playerTwo").click(selected);
+
 }
 
 function checkPlayerTurn() {
     if (player === 0) {
         if (check.hasClass('playerTwo')) {
+            debugger;
+
             firstClickedPosition = null;
             check = null;
             alert("Player One's Turn");
-            // showPlayerTwoModal()
-            // setTimeout(removePlayerTwoModal(), 1000);
+            showPlayerTwoModal()
+            setTimeout(removePlayerTwoModal(), 1000);
         } else {
             console.log("check passed");
         }
@@ -48,8 +57,8 @@ function checkPlayerTurn() {
             firstClickedPosition = null;
             check = null;
             alert("Player Two's Turn");
-            // showPlayerOneModal();
-            // setTimeout(removePlayerOneModal(), 1000);
+            showPlayerOneModal();
+            setTimeout(removePlayerOneModal(), 1000);
 
         } else {
             console.log("check passed");
@@ -58,7 +67,7 @@ function checkPlayerTurn() {
 }
 
 function showPlayerOneModal() {
-    $('.shadow1').addClass('show');
+    $('.PlayerOneModal').removeClass('show');
 }
 
 function removePlayerOneModal() {
@@ -66,7 +75,7 @@ function removePlayerOneModal() {
 }
 
 function showPlayerTwoModal() {
-    $('.shadow2').addClass('show');
+    $('.PlayerTwoModal').addClass('show');
 }
 
 function removePlayerTwoModal() {
@@ -135,6 +144,8 @@ function pieceClicked() {
 
         checkPlayerTurn();
 
+        remove();
+
         if (check.hasClass('playerOne') || check.hasClass('playerTwo')) {
 
             var column = firstClickedPosition.attr('columnPosition');
@@ -142,6 +153,8 @@ function pieceClicked() {
             console.log('column row', column, row);
             column = parseInt(column);
             row = parseInt(row);
+
+
 
             if (check.hasClass('playerOne')) {
 
@@ -181,7 +194,6 @@ function pieceClicked() {
 }
 
 function movePiece() {
-
     var checkNewSquare = secondClickedPosition.find('div');
     if (checkNewSquare.hasClass('playerOne') || checkNewSquare.hasClass('playerTwo')) {
         console.log('a player is on this spot');
@@ -198,8 +210,8 @@ function movePiece() {
             gameBoardArray[newRow][newColumn] = 2;
         }
 
-        check.removeClass('playerOne');
-        check.removeClass('playerTwo');
+        check.removeClass('playerOne selected');
+        check.removeClass('playerTwo selected');
 
         addGamePieces(gameBoardArray);
 
@@ -214,12 +226,46 @@ function movePiece() {
     }
 }
 
-this.remove = function () {
+function remove () {
     // CODE FOR APPENDING PIECE TO STATS
-    if(player == 1) {$('#player2').append("<div class='capturedPiece'></div>")};
-    if(player == 2) {$('#player1').append("<div class='capturedPiece'></div>")};
+
+    if(check.hasClass('playerOne')) {
+        $('#player1').append("<div class='capturedPiece'></div>");
+        playerCount1++;
+    };
+    if(check.hasClass('playerTwo')) {
+        $('#player2').append("<div class='capturedPiece'></div>");
+        playerCount2++;
+    };
   }
 
+
+  function selected() {
+    var selected;
+    var playerTurn = ($(this).attr("class").split(' ')[0]);
+    if(playerTurn) {
+      if($(this).hasClass('selected')) {
+          selected = true;
+          $('.piece').each(function(index){
+          $('.piece').eq(index).removeClass('selected')})};
+      if(!selected) {
+        $(this).addClass('selected');
+    }
+}
+}
+
+// BACKUP WIN FUNCTION
+function win(){
+    if (playerCount1 === all_pieces_captured) {
+        // alert('You have won!');
+        congratulations();
+  
+    } if (playerCount2 === all_pieces_captured) {
+        // alert('You have won!');
+        congratulations();
+    }
+
+}
 
 
 
