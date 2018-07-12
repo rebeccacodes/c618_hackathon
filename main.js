@@ -21,6 +21,7 @@ var checkChildDiv4;
 
 var playerOnePoints = 0;
 var playerTwoPoints = 0;
+var all_pieces_captured = 12;
 
 var gameBoardArray = [
     [0, 1, 0, 1, 0, 1, 0, 1],
@@ -37,6 +38,7 @@ function startupGame() {
     buildGameBoard(gameBoardArray);
     addGamePieces(gameBoardArray);
     activateClickHandlers();
+    
 
 }
 
@@ -180,7 +182,7 @@ function pieceClicked() {
 
                 possibleMoveRow2 = row - 2;
                 possibleMoveColumnLeft2 = column - 2;
-                possibleMoveColumnRight2 = column - 2;
+                possibleMoveColumnRight2 = column + 2;
 
             }
 
@@ -245,10 +247,14 @@ function movePiece() {
             checkChildDiv1.removeClass('playerTwo');
             if (player === 0) {
                 gameBoardArray[newRow - 1][newColumn - 1] = 0;
-                playerOnePoints++
+                playerOnePoints++;
+                $('#player2').append("<div class='capturedPiece'></div>");
+                
             } else if (player === 1) {
                 gameBoardArray[newRow - 1][newColumn + 1] = 0;
-                playerTwoPoints++
+                playerTwoPoints++;
+                $('#player1').append("<div class='capturedPiece'></div>");
+
             }
         }
 
@@ -259,10 +265,14 @@ function movePiece() {
             checkChildDiv2.removeClass('playerTwo');
             if (player === 0) {
                 gameBoardArray[newRow - 1][newColumn - 1] = 0;
-                playerOnePoints++
+                playerOnePoints++;
+                $('#player2').append("<div class='capturedPiece'></div>");
+
             } else if (player === 1) {
                 gameBoardArray[newRow - 1][newColumn + 1] = 0;
-                playerTwoPoints++
+                playerTwoPoints++;
+                $('#player1').append("<div class='capturedPiece'></div>");
+
             }
         }
 
@@ -290,50 +300,35 @@ function movePiece() {
         //buildGameBoard(gameBoardArray);
         addGamePieces(gameBoardArray);
         player = 1 - player;
+        changeP();
         counter = 0;
-    }
+        win();
+        }
 }
 
-function remove() {
-    // CODE FOR APPENDING PIECE TO STATS
-    if (player === 0) { $('#player2').append("<div class='capturedPiece'></div>") };
-    if (player === 1) { $('#player1').append("<div class='capturedPiece'></div>") };
-}
-    if(player == 1) {$('#player2').append("<div class='capturedPiece'></div>")};
-    if(player == 2) {$('#player1').append("<div class='capturedPiece'></div>")};
+
+function changeP(){
+        if(player == 1) {
+          $('.turn').css("background", "linear-gradient(to right, transparent 50%, red 50%)");
+          return;
+        }
+        if(player == 0) {
+          $('.turn').css("background", "linear-gradient(to right, red 50%, transparent 50%)");
+        }
+      }
+
+function win(){
+    if (playerOnePoints === all_pieces_captured) {
+        // alert('You have won!');
+        playerOneWins();  
+    } if (playerTwoPoints === all_pieces_captured) {
+        // alert('You have won!');
+        playerTwoWins();
+    }
+
 }
 
-function checkForWinner(){
-    //while the winner variable is false runs the loop
-    var counterOne = 0;
-    var counterTwo = 0;
-    while (winner = false){
-        for (var i = 0; i<gameBoardArray.length; i++){
-            for (var j = 0; j<gameBoardArray.length; j++){
-                if(gameBoardArray[i][j] === 1){
-                    counterOne++;
-                    console.log(counterOne);
-                } else if(gameBoardArray[i][j] === 2){
-                    counterTwo++;
-                    console.log(counterTwo);
-                }
-            }
-        }
-        if( counterOne === 0){
-            playerTwoWins();
-            winner = true;
-        }
-        if( counterTwo === 0 ){
-            playerOneWins()
-            winner = true;
-        } else{
-            counterOne = 0;
-            counterTwo = 0;
-            console.log('breaking out of loop');
-            break;
-        }
-    }
-}
+
 
 
 
@@ -353,16 +348,16 @@ function checkForWinner(){
 }
 
 // BACKUP WIN FUNCTION
-function win(){
-    if (playerCount1 === all_pieces_captured) {
-        // alert('You have won!');
-        playerOneWins();  
-    } if (playerCount2 === all_pieces_captured) {
-        // alert('You have won!');
-        playerTwoWins();
-    }
+// function win(){
+//     if (playerOnePoints === 1) {
+//         // alert('You have won!');
+//         playerOneWins();  
+//     } if (playerTwoPoints === all_pieces_captured) {
+//         // alert('You have won!');
+//         playerTwoWins();
+//     }
 
-}
+// }
 
 function resetGame(){
         window.location.reload();

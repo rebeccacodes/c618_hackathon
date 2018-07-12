@@ -91,6 +91,7 @@
     font-size: 45px;
     font-family: "Comic Sans MS";
 }
+
 .PlayerTwoWinnerModal {
     height: 20%;
     width: 50%;
@@ -111,7 +112,6 @@
     text-align: center;
     font-size: 45px;
     font-family: "Comic Sans MS";
-
 }
 
 .PlayerTwoModal {
@@ -134,7 +134,7 @@
 }
 
 div.stats {
-    margin: 50px auto;
+    margin: 5px auto;
 }
 
 div.stats .wrapper {
@@ -148,8 +148,7 @@ div.stats #player1 {
     float: left;
     background-color: gold;
     box-sizing: border-box;
-    padding: 20px 20px;
-    border-top-left-radius: 3px;
+    padding: 5px 5px;
     color: black;
 }
 
@@ -164,7 +163,6 @@ div.stats #player1 .capturedPiece {
     display: inline-block;
     box-sizing: border-box;
     transition: all 0.2s linear;
-    margin: 5px;
 }
 
 div.stats #player2 {
@@ -174,9 +172,9 @@ div.stats #player2 {
     float: left;
     background-color: #2f3a3b;
     box-sizing: border-box;
-    padding: 20px 20px;
-    border-top-right-radius: 3px;
+    padding: 5px 5px;
     color: white;
+    vertical-align: top;
 }
 
 div.stats #player2 .capturedPiece {
@@ -190,7 +188,13 @@ div.stats #player2 .capturedPiece {
     display: inline-block;
     box-sizing: border-box;
     transition: all 0.2s linear;
-    margin: 5px;
+    vertical-align: top;
+}
+
+div.stats div.turn {
+    height: 10px;
+    width: 100%;
+    background: linear-gradient(to right, red 50%, transparent 50%);
 }
 
 button {
@@ -209,21 +213,20 @@ button {
     text-align: center;
     position: absolute;
     font-size: 20px;
-
-    left: 75%;
+    left: 85%;
 }
 
-.titleParent{
-    text-align: center;
-
-
+.titleParent {
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .title {
-    text-align: center;
     font-family: 'Cedarville Cursive', cursive;
     font-family: 'Chela One', cursive;
-    font-size: 100px;
+    font-size: 60px;
+    left: 50%;
 }
 
 .piece:hover {
