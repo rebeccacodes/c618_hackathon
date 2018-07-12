@@ -214,7 +214,11 @@ function movePiece() {
     }
 }
 
-
+this.remove = function () {
+    // CODE FOR APPENDING PIECE TO STATS
+    if(player == 1) {$('#player2').append("<div class='capturedPiece'></div>")};
+    if(player == 2) {$('#player1').append("<div class='capturedPiece'></div>")};
+  }
 
 
 
