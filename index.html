@@ -11,6 +11,7 @@
     <script src="main.js"></script>
 
 
+
 </head>
 
 <body>
@@ -38,31 +39,49 @@
 
     </div>
 
-    <div class="shadow1">
+    <div id="p1modal" class="shadow1">
         <div class="PlayerOneModal">
             <p>Player One's Turn</p>
         </div>
 
     </div>
-    <div class="shadow2">
+    <div id="p2modal" class="shadow2">
         <div class="PlayerTwoModal">
             <p>Player Two's Turn</p>
         </div>
     </div>
 
-    <div class="shadowOneWinner">
+    <div id="p1winner" class="shadowOneWinner">
         <div class="PlayerOneWinnerModal">
             <p>Player One Wins</p>
         </div>
     </div>
 
-    <div class="shadowTwoWinner">
+    <div id= "p2winner" class="shadowTwoWinner">
         <div class="PlayerTwoWinnerModal">
             <p>Player Two Wins</p>
         </div>
     </div>
-
-
+    <script>
+        var modal = document.getElementById("p1modal")
+        var modalTwo = document.getElementById("p2modal")
+        var modalThree = document.getElementById("p1winner")
+        var modalFour = document.getElementById("p2winner")
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+            if (event.target == modalTwo) {
+                modalTwo.style.display = "none";
+            }
+            if (event.target == modalThree) {
+                modalThree.style.display = "none";
+            }
+            if (event.target == modalFour) {
+                modalFour.style.display = "none";
+            }
+        }
+    </script>
 
 
 </body>

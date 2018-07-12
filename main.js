@@ -180,7 +180,7 @@ function pieceClicked() {
 
                 possibleMoveRow2 = row - 2;
                 possibleMoveColumnLeft2 = column - 2;
-                possibleMoveColumnRight2 = column - 2;
+                possibleMoveColumnRight2 = column + 2;
 
             }
 
@@ -280,6 +280,8 @@ function movePiece() {
 
         console.log(gameBoardArray);
 
+        checkForWinner(gameBoardArray);
+
         $(possibleMove1).removeClass('highLight');
         $(possibleMove2).removeClass('highLight');
         $(possibleMove3).removeClass('highLight');
@@ -291,6 +293,7 @@ function movePiece() {
         addGamePieces(gameBoardArray);
         player = 1 - player;
         counter = 0;
+
     }
 }
 
@@ -303,22 +306,25 @@ function remove() {
     if(player == 2) {$('#player1').append("<div class='capturedPiece'></div>")};
 
 
-function checkForWinner(){
+function checkForWinner(array){
     //while the winner variable is false runs the loop
+    console.log('this function exists');
     var counterOne = 0;
     var counterTwo = 0;
     while (winner = false){
-        for (var i = 0; i<gameBoardArray.length; i++){
-            for (var j = 0; j<gameBoardArray.length; j++){
-                if(gameBoardArray[i][j] === 1){
+        console.log('while loop')
+        for (var i = 0; i<array.length; i++){
+            for (var j = 0; j<array.length; j++){
+                if(array[i][j] === 1){
                     counterOne++;
                     console.log(counterOne);
-                } else if(gameBoardArray[i][j] === 2){
+                } else if(array[i][j] === 2){
                     counterTwo++;
                     console.log(counterTwo);
                 }
             }
         }
+        console.log('hello');
         if( counterOne === 0){
             playerTwoWins();
             winner = true;
