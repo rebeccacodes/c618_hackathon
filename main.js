@@ -12,6 +12,7 @@ var possibleMove2;
 var possibleMove3;
 var possibleMove4;
 var counter = 0;
+var winner = false;
 
 var checkChildDiv1;
 var checkChildDiv2;
@@ -36,6 +37,7 @@ function startupGame() {
     buildGameBoard(gameBoardArray);
     addGamePieces(gameBoardArray);
     activateClickHandlers();
+
 }
 
 function activateClickHandlers() {
@@ -47,9 +49,7 @@ function checkPlayerTurn() {
         if (check.hasClass('playerTwo')) {
             firstClickedPosition = null;
             check = null;
-            alert("Player One's Turn");
-            // showPlayerTwoModal()
-            // setTimeout(removePlayerTwoModal(), 1000);
+            showPlayerOneModal()
         } else {
             console.log("check passed");
         }
@@ -57,9 +57,7 @@ function checkPlayerTurn() {
         if (check.hasClass('playerOne')) {
             firstClickedPosition = null;
             check = null;
-            alert("Player Two's Turn");
-            // showPlayerOneModal();
-            // setTimeout(removePlayerOneModal(), 1000);
+            showPlayerTwoModal();
 
         } else {
             console.log("check passed");
@@ -68,19 +66,30 @@ function checkPlayerTurn() {
 }
 
 function showPlayerOneModal() {
-    $('.shadow1').addClass('show');
+    $('.shadow1').css('display', 'inline-block');
 }
 
-function removePlayerOneModal() {
-    $('.shadow1').removeClass('show');
-}
+/*function removePlayerOneModal() {
+    $('.shadow1').css('display', 'none');
+}*/
 
 function showPlayerTwoModal() {
-    $('.shadow2').addClass('show');
+    $('.shadow2').css('display', 'inline-block');
 }
 
+/*
 function removePlayerTwoModal() {
-    $('.shadow2').removeClass('show');
+    $('.shadow2').css('display', 'none');
+}
+*/
+
+function playerOneWins() {
+    //temp
+    $('.shadowOneWinner').css('display', 'inline-block');
+}
+function playerTwoWins(){
+    //temp
+    $('.shadowTwoWinner').css('display', 'inline-block');
 }
 
 function buildGameBoard(array) {
@@ -125,10 +134,10 @@ function addGamePieces(array) {
             if (array[i][j] === 0) {
 
             } else if (array[i][j] === 1) {
-                $(storePosition).addClass('playerOne');
+                $(storePosition).addClass('playerOne piece');
             }
             else if (array[i][j] === 2) {
-                $(storePosition).addClass('playerTwo');
+                $(storePosition).addClass('playerTwo piece');
             }
 
         }
@@ -290,6 +299,42 @@ function remove() {
     if (player === 0) { $('#player2').append("<div class='capturedPiece'></div>") };
     if (player === 1) { $('#player1').append("<div class='capturedPiece'></div>") };
 }
+    if(player == 1) {$('#player2').append("<div class='capturedPiece'></div>")};
+    if(player == 2) {$('#player1').append("<div class='capturedPiece'></div>")};
+}
+
+function checkForWinner(){
+    //while the winner variable is false runs the loop
+    var counterOne = 0;
+    var counterTwo = 0;
+    while (winner = false){
+        for (var i = 0; i<gameBoardArray.length; i++){
+            for (var j = 0; j<gameBoardArray.length; j++){
+                if(gameBoardArray[i][j] === 1){
+                    counterOne++;
+                    console.log(counterOne);
+                } else if(gameBoardArray[i][j] === 2){
+                    counterTwo++;
+                    console.log(counterTwo);
+                }
+            }
+        }
+        if( counterOne === 0){
+            playerTwoWins();
+            winner = true;
+        }
+        if( counterTwo === 0 ){
+            playerOneWins()
+            winner = true;
+        } else{
+            counterOne = 0;
+            counterTwo = 0;
+            console.log('breaking out of loop');
+            break;
+        }
+    }
+}
+
 
 
 
