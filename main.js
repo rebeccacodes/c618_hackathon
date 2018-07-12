@@ -346,7 +346,7 @@ function remove() {
 //                                 }
 //                             }
 //                         }
-                    
+
 //                         console.log('hello');
 //                         if (counterOne === 0) {
 //                             if (counterOne === 0) {
@@ -366,42 +366,42 @@ function remove() {
 //                     }
 //                 }
 //             }
-        
-    
-
-                        function win() {
-                            if (playerOnePoints === all_pieces_captured) {
-                                // alert('You have won!');
-                                playerOneWins();
-                            }
-                            if (playerTwoPoints === all_pieces_captured) {
-                                // alert('You have won!');
-                                playerTwoWins();
-                            }
-
-                        }
-
-                    
 
 
 
-                        // function selected() {
-                        //     var selected;
-                        //     var playerTurn = ($(this).attr("class").split(' ')[0]);
-                        //     if (playerTurn) {
-                        //         if ($(this).hasClass('selected')) {
-                        //             selected = true;
-                        //             $('.piece').each(function (index) {
-                        //                 $('.piece').eq(index).removeClass('selected')
-                        //             })
-                        //         };
-                        //         if (!selected) {
-                        //             $(this).addClass('selected');
-                        //         }
-                        //     }
-                        // }
+function win() {
+    if (playerOnePoints === all_pieces_captured) {
+        // alert('You have won!');
+        playerOneWins();
+    }
+    if (playerTwoPoints === all_pieces_captured) {
+        // alert('You have won!');
+        playerTwoWins();
+    }
+
+}
 
 
-                        function resetGame() {
-                            window.location.reload();
-                        }
+
+
+
+// function selected() {
+//     var selected;
+//     var playerTurn = ($(this).attr("class").split(' ')[0]);
+//     if (playerTurn) {
+//         if ($(this).hasClass('selected')) {
+//             selected = true;
+//             $('.piece').each(function (index) {
+//                 $('.piece').eq(index).removeClass('selected')
+//             })
+//         };
+//         if (!selected) {
+//             $(this).addClass('selected');
+//         }
+//     }
+// }
+
+
+function resetGame() {
+    window.location.reload();
+}
