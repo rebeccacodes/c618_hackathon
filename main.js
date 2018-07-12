@@ -9,8 +9,18 @@ var column = null;
 var row = null;
 var possibleMove1;
 var possibleMove2;
+var possibleMove3;
+var possibleMove4;
 var counter = 0;
 var winner = false;
+
+var checkChildDiv1;
+var checkChildDiv2;
+var checkChildDiv3;
+var checkChildDiv4;
+
+var playerOnePoints = 0;
+var playerTwoPoints = 0;
 
 var gameBoardArray = [
     [0, 1, 0, 1, 0, 1, 0, 1],
@@ -174,8 +184,38 @@ function pieceClicked() {
 
             }
 
-            possibleMove1 = $(`div[rowPosition = ${possibleMoveRow}][columnPosition = ${possibleMoveColumnLeft}]`).addClass("highLight");
-            possibleMove2 = $(`div[rowPosition = ${possibleMoveRow}][columnPosition = ${possibleMoveColumnRight}]`).addClass("highLight");
+            possibleMove1 = $(`div[rowPosition = ${possibleMoveRow}][columnPosition = ${possibleMoveColumnLeft}]`);
+            possibleMove2 = $(`div[rowPosition = ${possibleMoveRow}][columnPosition = ${possibleMoveColumnRight}]`);
+            possibleMove3 = $(`div[rowPosition = ${possibleMoveRow2}][columnPosition = ${possibleMoveColumnLeft2}]`);
+            possibleMove4 = $(`div[rowPosition = ${possibleMoveRow2}][columnPosition = ${possibleMoveColumnRight2}]`);
+
+            //finding child divs of possible moves
+            checkChildDiv1 = possibleMove1.find('div');
+            checkChildDiv2 = possibleMove2.find('div');
+            checkChildDiv3 = possibleMove3.find('div');
+            checkChildDiv4 = possibleMove4.find('div');
+            //checking if there are pieces on the possible move locations
+
+            if (!checkChildDiv1.hasClass('playerOne') && (!checkChildDiv1.hasClass('playerTwo'))) {
+                possibleMove1.addClass('highLight');
+            }
+            if (!checkChildDiv2.hasClass('playerOne') && (!checkChildDiv2.hasClass('playerTwo'))) {
+                possibleMove2.addClass('highLight');
+            }
+
+            if (checkChildDiv1.hasClass('playerOne') || (checkChildDiv1.hasClass('playerTwo'))) {
+                if (!checkChildDiv3.hasClass('playerOne') && (!checkChildDiv3.hasClass('playerTwo')))
+                    possibleMove3.addClass('highLight');
+                possibleMove3.addClass('jumpLeft');
+
+            }
+
+            if (checkChildDiv2.hasClass('playerOne') || (checkChildDiv2.hasClass('playerTwo'))) {
+                if (!checkChildDiv4.hasClass('playerOne') && (!checkChildDiv4.hasClass('playerTwo')))
+                    possibleMove4.addClass('highLight');
+                possibleMove4.addClass('jumpRight');
+
+            }
 
             gameBoardArray[row][column] = 0;
 
@@ -184,7 +224,6 @@ function pieceClicked() {
         }
     } else if (secondClickedPosition === null) {
         secondClickedPosition = $(this);
-        console.log("secondClickedPosition ", secondClickedPosition)
         movePiece();
     }
 }
@@ -192,14 +231,42 @@ function pieceClicked() {
 function movePiece() {
 
     var checkNewSquare = secondClickedPosition.find('div');
-    if (checkNewSquare.hasClass('playerOne') || checkNewSquare.hasClass('playerTwo')) {
-        console.log('a player is on this spot');
-    } else if (secondClickedPosition.hasClass('highLight')) {
+    if (secondClickedPosition.hasClass('highLight')) {
 
         var newColumn = secondClickedPosition.attr('columnPosition');
         var newRow = secondClickedPosition.attr('rowPosition');
         newColumn = parseInt(newColumn);
         newRow = parseInt(newRow);
+
+        if (secondClickedPosition.hasClass('jumpLeft')) {
+            console.log('you were jumped');
+            console.log("checkChildDiv1", checkChildDiv1)
+            checkChildDiv1.removeClass('playerOne');
+            checkChildDiv1.removeClass('playerTwo');
+            if (player === 0) {
+                gameBoardArray[newRow - 1][newColumn - 1] = 0;
+                playerOnePoints++
+            } else if (player === 1) {
+                gameBoardArray[newRow - 1][newColumn + 1] = 0;
+                playerTwoPoints++
+            }
+        }
+
+        if (secondClickedPosition.hasClass('jumpRight')) {
+            console.log('you were jumped');
+            console.log("checkChildDiv2", checkChildDiv2)
+            checkChildDiv2.removeClass('playerOne');
+            checkChildDiv2.removeClass('playerTwo');
+            if (player === 0) {
+                gameBoardArray[newRow - 1][newColumn - 1] = 0;
+                playerOnePoints++
+            } else if (player === 1) {
+                gameBoardArray[newRow - 1][newColumn + 1] = 0;
+                playerTwoPoints++
+            }
+        }
+
+
 
         if (check.hasClass('playerOne')) {
             gameBoardArray[newRow][newColumn] = 1;
@@ -210,21 +277,28 @@ function movePiece() {
         check.removeClass('playerOne');
         check.removeClass('playerTwo');
 
-        addGamePieces(gameBoardArray);
+
+        console.log(gameBoardArray);
 
         $(possibleMove1).removeClass('highLight');
         $(possibleMove2).removeClass('highLight');
+        $(possibleMove3).removeClass('highLight');
+        $(possibleMove4).removeClass('highLight');
 
         firstClickedPosition = null;
         secondClickedPosition = null;
-
+        //buildGameBoard(gameBoardArray);
+        addGamePieces(gameBoardArray);
         player = 1 - player;
         counter = 0;
     }
 }
 
-this.remove = function () {
+function remove() {
     // CODE FOR APPENDING PIECE TO STATS
+    if (player === 0) { $('#player2').append("<div class='capturedPiece'></div>") };
+    if (player === 1) { $('#player1').append("<div class='capturedPiece'></div>") };
+}
     if(player == 1) {$('#player2').append("<div class='capturedPiece'></div>")};
     if(player == 2) {$('#player1').append("<div class='capturedPiece'></div>")};
 }
