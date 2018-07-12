@@ -124,10 +124,10 @@ function addGamePieces(array) {
             if (array[i][j] === 0) {
 
             } else if (array[i][j] === 1) {
-                $(storePosition).addClass('playerOne');
+                $(storePosition).addClass('playerOne piece');
             }
             else if (array[i][j] === 2) {
-                $(storePosition).addClass('playerTwo');
+                $(storePosition).addClass('playerTwo piece');
             }
 
         }
