@@ -49,7 +49,7 @@ function checkPlayerTurn() {
         if (check.hasClass('playerTwo')) {
             firstClickedPosition = null;
             check = null;
-            showPlayerOneModal()
+            //showPlayerOneModal()
         } else {
             console.log("check passed");
         }
@@ -57,7 +57,7 @@ function checkPlayerTurn() {
         if (check.hasClass('playerOne')) {
             firstClickedPosition = null;
             check = null;
-            showPlayerTwoModal();
+            // showPlayerTwoModal();
 
         } else {
             console.log("check passed");
@@ -69,25 +69,15 @@ function showPlayerOneModal() {
     $('.shadow1').css('display', 'inline-block');
 }
 
-/*function removePlayerOneModal() {
-    $('.shadow1').css('display', 'none');
-}*/
-
 function showPlayerTwoModal() {
     $('.shadow2').css('display', 'inline-block');
 }
-
-/*
-function removePlayerTwoModal() {
-    $('.shadow2').css('display', 'none');
-}
-*/
 
 function playerOneWins() {
     //temp
     $('.shadowOneWinner').css('display', 'inline-block');
 }
-function playerTwoWins(){
+function playerTwoWins() {
     //temp
     $('.shadowTwoWinner').css('display', 'inline-block');
 }
@@ -244,10 +234,10 @@ function movePiece() {
             checkChildDiv1.removeClass('playerOne');
             checkChildDiv1.removeClass('playerTwo');
             if (player === 0) {
-                gameBoardArray[newRow - 1][newColumn - 1] = 0;
+                gameBoardArray[newRow - 1][newColumn + 1] = 0;
                 playerOnePoints++
             } else if (player === 1) {
-                gameBoardArray[newRow - 1][newColumn + 1] = 0;
+                gameBoardArray[newRow + 1][newColumn + 1] = 0;
                 playerTwoPoints++
             }
         }
@@ -261,7 +251,7 @@ function movePiece() {
                 gameBoardArray[newRow - 1][newColumn - 1] = 0;
                 playerOnePoints++
             } else if (player === 1) {
-                gameBoardArray[newRow - 1][newColumn + 1] = 0;
+                gameBoardArray[newRow + 1][newColumn - 1] = 0;
                 playerTwoPoints++
             }
         }
@@ -299,17 +289,15 @@ function remove() {
     // CODE FOR APPENDING PIECE TO STATS
     if (player === 0) { $('#player2').append("<div class='capturedPiece'></div>") };
     if (player === 1) { $('#player1').append("<div class='capturedPiece'></div>") };
+
     }
-    if(player == 1) {$('#player2').append("<div class='capturedPiece'></div>")};
-    if(player == 2) {$('#player1').append("<div class='capturedPiece'></div>")};
-
-
-function checkForWinner(array){
+ 
+function checkForWinner() {
     //while the winner variable is false runs the loop
     console.log('this function exists');
     var counterOne = 0;
     var counterTwo = 0;
-    while (winner = false){
+    while (winner == false){
         console.log('while loop')
         for (var i = 0; i<array.length; i++){
             for (var j = 0; j<array.length; j++){
@@ -317,6 +305,13 @@ function checkForWinner(array){
                     counterOne++;
                     console.log(counterOne);
                 } else if(array[i][j] === 2){
+    while (winner = false) {
+        for (var i = 0; i < gameBoardArray.length; i++) {
+            for (var j = 0; j < gameBoardArray.length; j++) {
+                if (gameBoardArray[i][j] === 1) {
+                    counterOne++;
+                    console.log(counterOne);
+                } else if (gameBoardArray[i][j] === 2) {
                     counterTwo++;
                     console.log(counterTwo);
                 }
@@ -324,13 +319,14 @@ function checkForWinner(array){
         }
         console.log('hello');
         if( counterOne === 0){
+        if (counterOne === 0) {
             playerTwoWins();
             winner = true;
         }
-        if( counterTwo === 0 ){
+        if (counterTwo === 0) {
             playerOneWins()
             winner = true;
-        } else{
+        } else {
             counterOne = 0;
             counterTwo = 0;
             console.log('breaking out of loop');
@@ -342,25 +338,27 @@ function checkForWinner(array){
 
 
 
-  function selected() {
+function selected() {
     var selected;
     var playerTurn = ($(this).attr("class").split(' ')[0]);
-    if(playerTurn) {
-      if($(this).hasClass('selected')) {
-          selected = true;
-          $('.piece').each(function(index){
-          $('.piece').eq(index).removeClass('selected')})};
-      if(!selected) {
-        $(this).addClass('selected');
+    if (playerTurn) {
+        if ($(this).hasClass('selected')) {
+            selected = true;
+            $('.piece').each(function (index) {
+                $('.piece').eq(index).removeClass('selected')
+            })
+        };
+        if (!selected) {
+            $(this).addClass('selected');
+        }
     }
-}
 }
 
 // BACKUP WIN FUNCTION
-function win(){
+function win() {
     if (playerCount1 === all_pieces_captured) {
         // alert('You have won!');
-        playerOneWins();  
+        playerOneWins();
     } if (playerCount2 === all_pieces_captured) {
         // alert('You have won!');
         playerTwoWins();
@@ -368,8 +366,8 @@ function win(){
 
 }
 
-function resetGame(){
-        window.location.reload();
+function resetGame() {
+    window.location.reload();
 }
 
 
