@@ -73,6 +73,15 @@ function removePlayerTwoModal() {
 }
 */
 
+function playerOneWins() {
+    //temp
+    $('.shadowOneWinner').css('display', 'inline-block');
+}
+function playerTwoWins(){
+    //temp
+    $('.shadowTwoWinner').css('display', 'inline-block');
+}
+
 function buildGameBoard(array) {
     var gameBoard = $('#game-board');
     var alternate = 1
@@ -252,14 +261,7 @@ function checkForWinner(){
     }
 }
 
-function playerOneWins(){
-    //temp
-    alert('P1 wins');
-}
-function playerTwoWins(){
-    //temp
-    alert('P2 wins');
-}
+
 
 
 
