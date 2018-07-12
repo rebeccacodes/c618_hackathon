@@ -338,6 +338,38 @@ function checkForWinner(){
 
 
 
+  function selected() {
+    var selected;
+    var playerTurn = ($(this).attr("class").split(' ')[0]);
+    if(playerTurn) {
+      if($(this).hasClass('selected')) {
+          selected = true;
+          $('.piece').each(function(index){
+          $('.piece').eq(index).removeClass('selected')})};
+      if(!selected) {
+        $(this).addClass('selected');
+    }
+}
+}
+
+// BACKUP WIN FUNCTION
+function win(){
+    if (playerCount1 === all_pieces_captured) {
+        // alert('You have won!');
+        playerOneWins();  
+    } if (playerCount2 === all_pieces_captured) {
+        // alert('You have won!');
+        playerTwoWins();
+    }
+
+}
+
+function resetGame(){
+        window.location.reload();
+}
+
+
+
 
 
 
