@@ -3,6 +3,8 @@ $(document).ready(startupGame);
 
 //global variables below
 var player = 1;
+var firstClickedPosition = null;
+var secondClickedPosition = null;
 
 function startupGame() {
     buildGameBoard(gameBoardArray);
@@ -11,8 +13,8 @@ function startupGame() {
 }
 
 function activateClickHandlers() {
-    $(".playerOne").click(movePiece);
-    $(".playerTwo").click(movePiece);
+    $(".dark").click(movePiece);
+
     // var selected;
     // var playerTurn = ($(this).attr("class").split(' ')[0]);
     // if (playerTurn) {
@@ -45,7 +47,7 @@ function buildGameBoard(array) {
         var gridRow = $("<div>", {
             class: "row"
 
-        })
+        });
         for (var j = 0; j < array[i].length; j++) {
             if (alternate === 1) {
                 var gridSquare = $("<div>", {
@@ -60,7 +62,7 @@ function buildGameBoard(array) {
                     class: "dark square",
                     columnPosition: j,
                     rowPosition: i
-                })
+                });
                 var nestedDiv = $('<div>').addClass('empty');
                 gridSquare1.append(nestedDiv);
                 gridRow.append(gridSquare1);
@@ -87,39 +89,26 @@ function addGamePieces(array) {
             else if (array[i][j] === 2) {
                 $(storePosition).addClass('playerTwo');
             }
-            else if (array[i][j] === 2) {
-            }
+
         }
-
-
-
     }
 }
 
-
-function showPlayerOneModal(){
+function showPlayerOneModal() {
     $('.shadow1').addClass('show');
 }
 
-function showPlayerTwoModal(){
-    $('.shadow2').addClass('show');
-}
-
-function removePlayerOneModal(){
+function removePlayerOneModal() {
     $('.shadow1').removeClass('show');
 }
 
-function removePlayerTwoModal(){
-    $('.shadow2').removeClass('show');
-}
-
-function changePlayer(){
-    if (player = 1){
+function changePlayer() {
+    if (player = 1) {
         player = 2;
         showPlayerOneModal();
         setTimeout(removePlayerOneModal(), 1000);
     }
-    if (player =2){
+    if (player = 2) {
         player = 1;
         showPlayerTwoModal();
         setTimeout(removePlayerTwoModal(), 1000);
@@ -136,51 +125,58 @@ var removePiece = function () {
 
 }
 
+var check;
 function movePiece() {
     //verify whose turn it is
-    console.log("move piece function");
-    //identify square that was clicked
-    var pieceToMove = $(this);
-    console.log("piece to move", pieceToMove);
-    var check = pieceToMove.find('div');
-    console.log("what is this", pieceToMove);
+    console.log('move piece function clicked');
 
-    //and make sure it has a piece on it
-    if (check.hasClass('playerOne')) {
-        console.log('player one exists');
+    if (firstClickedPosition === null) {
+        firstClickedPosition = $(this);
+
+        check = firstClickedPosition.find('div');
+        // check.removeClass('playerOne');
+        if (check.hasClass('playerOne')) {
+            // check.removeClass('playerOne');
+            //get the rowPosition and columnPosition of the piece to move
+
+            var column = firstClickedPosition.attr('columnPosition');
+            var row = firstClickedPosition.attr('rowPosition');
+            console.log('column row', column, row);
+            column = parseInt(column);
+            row = parseInt(row);
+            gameBoardArray[row][column] = 0;
+
+            firstClickedPosition = 1;
+            console.log(gameBoardArray);
+        }
+    } else if (secondClickedPosition === null) {
+        secondClickedPosition = $(this);
+        var checkNewSquare = secondClickedPosition.find('div');
+        if (checkNewSquare.hasClass('playerOne') || checkNewSquare.hasClass('playerTwo')) {
+            console.log('a player is on this spot');
+        } else {
+            var newColumn = secondClickedPosition.attr('columnPosition');
+            var newRow = secondClickedPosition.attr('rowPosition');
+            newColumn = parseInt(newColumn);
+            newRow = parseInt(newRow);
+
+            gameBoardArray[newRow][newColumn] = 1;
+            check.removeClass('playerOne');
+            addGamePieces(gameBoardArray);
+
+            firstClickedPosition = null;
+            secondClickedPosition = null;
+        }
     }
-    //get the rowPosition and columnPosition of the piece to move
-    var column = pieceToMove.attr('columnPosition');
-    var row = pieceToMove.attr('rowPosition');
-    column = parseInt(column);
-    row = parseInt(row);
-    // coordinate the array position with the div that was selected
-    // var arrayPositionValue = gameBoardArray[row][column];
-    // console.log("arrayPositionValue: ", arrayPositionValue);
-
-    //identify square that was clicked to move the piece to
-
-    var placeToMoveTo = $(this);
-    console.log("placeToMoveTo:", placeToMoveTo);
-    var checkNewSquare = placeToMoveTo.find('div');
-    var check = placeToMoveTo.find('div');
-
-    if (check.hasClass('playerOne') || check.hasClass('playerTwo')) {
-        console.log('a player is on this spot');
-    } else {
-        //get the rowPosition and columnPosition
-        var newColumn = placeToMoveTo.attr('columnPosition');
-        var newRow = placeToMoveTo.attr('rowPosition');
-        newColumn = parseInt(newColumn);
-        newRow = parseInt(newRow);
-        //update the array so that the old square is now 0 and the new square now has the current player's number
-        pieceToMove.removeClass('playerOne');
-        //gameBoardArray[row][column] = 4;
-        gameBoardArray[newRow][newColumn] = 1;
-        console.log(gameBoardArray);
-
-    }
-    addGamePieces(gameBoardArray);
-    //once array is updated, run add game pieces again
 }
+
+
+
+
+
+
+
+
+
+
 
