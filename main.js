@@ -21,6 +21,7 @@ var checkChildDiv4;
 
 var playerOnePoints = 0;
 var playerTwoPoints = 0;
+var all_pieces_captured = 12;
 
 var gameBoardArray = [
     [0, 1, 0, 1, 0, 1, 0, 1],
@@ -37,6 +38,7 @@ function startupGame() {
     buildGameBoard(gameBoardArray);
     addGamePieces(gameBoardArray);
     activateClickHandlers();
+    
 
 }
 
@@ -234,11 +236,17 @@ function movePiece() {
             checkChildDiv1.removeClass('playerOne');
             checkChildDiv1.removeClass('playerTwo');
             if (player === 0) {
+
                 gameBoardArray[newRow - 1][newColumn + 1] = 0;
-                playerOnePoints++
+                playerOnePoints++;
+                $('#player2').append("<div class='capturedPiece'></div>");
+                
             } else if (player === 1) {
                 gameBoardArray[newRow + 1][newColumn + 1] = 0;
-                playerTwoPoints++
+                playerTwoPoints++;
+                $('#player1').append("<div class='capturedPiece'></div>");
+
+
             }
         }
 
@@ -249,10 +257,14 @@ function movePiece() {
             checkChildDiv2.removeClass('playerTwo');
             if (player === 0) {
                 gameBoardArray[newRow - 1][newColumn - 1] = 0;
-                playerOnePoints++
+                playerOnePoints++;
+                $('#player2').append("<div class='capturedPiece'></div>");
+
             } else if (player === 1) {
                 gameBoardArray[newRow + 1][newColumn - 1] = 0;
-                playerTwoPoints++
+                playerTwoPoints++;
+                $('#player1').append("<div class='capturedPiece'></div>");
+
             }
         }
 
@@ -280,7 +292,20 @@ function movePiece() {
         //buildGameBoard(gameBoardArray);
         addGamePieces(gameBoardArray);
         player = 1 - player;
+        changeP();
         counter = 0;
+        win();
+        }
+}
+
+
+function changeP(){
+        if(player == 1) {
+          $('.turn').css("background", "linear-gradient(to right, transparent 50%, red 50%)");
+          return;
+        }
+        if(player == 0) {
+          $('.turn').css("background", "linear-gradient(to right, red 50%, transparent 50%)");
 
     }
 }
@@ -332,39 +357,39 @@ function checkForWinner() {
             console.log('breaking out of loop');
             break;
         }
-    }
-}
+      }
 
-
-
-
-function selected() {
-    var selected;
-    var playerTurn = ($(this).attr("class").split(' ')[0]);
-    if (playerTurn) {
-        if ($(this).hasClass('selected')) {
-            selected = true;
-            $('.piece').each(function (index) {
-                $('.piece').eq(index).removeClass('selected')
-            })
-        };
-        if (!selected) {
-            $(this).addClass('selected');
-        }
-    }
-}
-
-// BACKUP WIN FUNCTION
-function win() {
-    if (playerCount1 === all_pieces_captured) {
+function win(){
+    if (playerOnePoints === all_pieces_captured) {
         // alert('You have won!');
-        playerOneWins();
-    } if (playerCount2 === all_pieces_captured) {
+        playerOneWins();  
+    } if (playerTwoPoints === all_pieces_captured) {
         // alert('You have won!');
         playerTwoWins();
     }
 
 }
+
+
+
+
+
+// function selected() {
+//     var selected;
+//     var playerTurn = ($(this).attr("class").split(' ')[0]);
+//     if (playerTurn) {
+//         if ($(this).hasClass('selected')) {
+//             selected = true;
+//             $('.piece').each(function (index) {
+//                 $('.piece').eq(index).removeClass('selected')
+//             })
+//         };
+//         if (!selected) {
+//             $(this).addClass('selected');
+//         }
+//     }
+// }
+
 
 function resetGame() {
     window.location.reload();
