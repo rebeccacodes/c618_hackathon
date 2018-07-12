@@ -115,10 +115,10 @@ function addGamePieces(array) {
             if (array[i][j] === 0) {
 
             } else if (array[i][j] === 1) {
-                $(storePosition).addClass('playerOne piece');
+                $(storePosition).addClass('playerOne');
             }
             else if (array[i][j] === 2) {
-                $(storePosition).addClass('playerTwo piece');
+                $(storePosition).addClass('playerTwo');
             }
 
         }
@@ -214,7 +214,11 @@ function movePiece() {
     }
 }
 
-
+this.remove = function () {
+    // CODE FOR APPENDING PIECE TO STATS
+    if(player == 1) {$('#player2').append("<div class='capturedPiece'></div>")};
+    if(player == 2) {$('#player1').append("<div class='capturedPiece'></div>")};
+  }
 
 
 
