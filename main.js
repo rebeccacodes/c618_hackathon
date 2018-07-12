@@ -10,6 +10,10 @@ var row = null;
 var possibleMove1;
 var possibleMove2;
 var counter = 0;
+var playerCount1 = 0;
+var playerCount2 = 0;
+var all_pieces_captured = 12;
+
 var winner = false;
 
 var gameBoardArray = [
@@ -32,11 +36,16 @@ function startupGame() {
 
 function activateClickHandlers() {
     $(".dark").click(pieceClicked);
+    $(".playerOne").click(selected);
+    $(".playerTwo").click(selected);
+
 }
 
 function checkPlayerTurn() {
     if (player === 0) {
         if (check.hasClass('playerTwo')) {
+            debugger;
+
             firstClickedPosition = null;
             check = null;
             showPlayerOneModal()
@@ -56,7 +65,14 @@ function checkPlayerTurn() {
 }
 
 function showPlayerOneModal() {
-    $('.shadow1').css('display', 'inline-block');
+    $('.shadow1').addClass("visible");
+    $(document).click(function(event) {
+        //if you click on anything except the modal itself or the "open modal" link, close the modal
+        if (!$(event.target).closest(".shadow1").length) {
+          $("body").find(".shadow1").removeClass("visible");
+        }
+      });
+      
 }
 
 /*function removePlayerOneModal() {
@@ -64,8 +80,13 @@ function showPlayerOneModal() {
 }*/
 
 function showPlayerTwoModal() {
-    $('.shadow2').css('display', 'inline-block');
-}
+    $('.shadow2').addClass("visible");
+    $(document).click(function(event) {
+        //if you click on anything except the modal itself or the "open modal" link, close the modal
+        if (!$(event.target).closest(".shadow2").length) {
+          $("body").find(".shadow2").removeClass("visible");
+        }
+      });}
 
 /*
 function removePlayerTwoModal() {
@@ -144,6 +165,8 @@ function pieceClicked() {
 
         checkPlayerTurn();
 
+        remove();
+
         if (check.hasClass('playerOne') || check.hasClass('playerTwo')) {
 
             var column = firstClickedPosition.attr('columnPosition');
@@ -151,6 +174,8 @@ function pieceClicked() {
             console.log('column row', column, row);
             column = parseInt(column);
             row = parseInt(row);
+
+
 
             if (check.hasClass('playerOne')) {
 
@@ -190,7 +215,6 @@ function pieceClicked() {
 }
 
 function movePiece() {
-
     var checkNewSquare = secondClickedPosition.find('div');
     if (checkNewSquare.hasClass('playerOne') || checkNewSquare.hasClass('playerTwo')) {
         console.log('a player is on this spot');
@@ -207,8 +231,8 @@ function movePiece() {
             gameBoardArray[newRow][newColumn] = 2;
         }
 
-        check.removeClass('playerOne');
-        check.removeClass('playerTwo');
+        check.removeClass('playerOne selected');
+        check.removeClass('playerTwo selected');
 
         addGamePieces(gameBoardArray);
 
@@ -223,11 +247,19 @@ function movePiece() {
     }
 }
 
-this.remove = function () {
+function remove () {
     // CODE FOR APPENDING PIECE TO STATS
-    if(player == 1) {$('#player2').append("<div class='capturedPiece'></div>")};
-    if(player == 2) {$('#player1').append("<div class='capturedPiece'></div>")};
-}
+
+    if(check.hasClass('playerOne')) {
+        $('#player1').append("<div class='capturedPiece'></div>");
+        playerCount1++;
+    };
+    if(check.hasClass('playerTwo')) {
+        $('#player2').append("<div class='capturedPiece'></div>");
+        playerCount2++;
+    };
+  }
+
 
 function checkForWinner(){
     //while the winner variable is false runs the loop
@@ -262,6 +294,33 @@ function checkForWinner(){
 }
 
 
+
+  function selected() {
+    var selected;
+    var playerTurn = ($(this).attr("class").split(' ')[0]);
+    if(playerTurn) {
+      if($(this).hasClass('selected')) {
+          selected = true;
+          $('.piece').each(function(index){
+          $('.piece').eq(index).removeClass('selected')})};
+      if(!selected) {
+        $(this).addClass('selected');
+    }
+}
+}
+
+// BACKUP WIN FUNCTION
+function win(){
+    if (playerCount1 === all_pieces_captured) {
+        // alert('You have won!');
+        congratulations();
+  
+    } if (playerCount2 === all_pieces_captured) {
+        // alert('You have won!');
+        congratulations();
+    }
+
+}
 
 
 
