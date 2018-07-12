@@ -281,6 +281,7 @@ function movePiece() {
         addGamePieces(gameBoardArray);
         player = 1 - player;
         counter = 0;
+
     }
 }
 
@@ -288,14 +289,22 @@ function remove() {
     // CODE FOR APPENDING PIECE TO STATS
     if (player === 0) { $('#player2').append("<div class='capturedPiece'></div>") };
     if (player === 1) { $('#player1').append("<div class='capturedPiece'></div>") };
-}
 
-
-
+    }
+ 
 function checkForWinner() {
     //while the winner variable is false runs the loop
+    console.log('this function exists');
     var counterOne = 0;
     var counterTwo = 0;
+    while (winner == false){
+        console.log('while loop')
+        for (var i = 0; i<array.length; i++){
+            for (var j = 0; j<array.length; j++){
+                if(array[i][j] === 1){
+                    counterOne++;
+                    console.log(counterOne);
+                } else if(array[i][j] === 2){
     while (winner = false) {
         for (var i = 0; i < gameBoardArray.length; i++) {
             for (var j = 0; j < gameBoardArray.length; j++) {
@@ -308,6 +317,8 @@ function checkForWinner() {
                 }
             }
         }
+        console.log('hello');
+        if( counterOne === 0){
         if (counterOne === 0) {
             playerTwoWins();
             winner = true;
@@ -358,7 +369,6 @@ function win() {
 function resetGame() {
     window.location.reload();
 }
-
 
 
 
