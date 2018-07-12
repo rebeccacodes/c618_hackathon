@@ -69,19 +69,9 @@ function showPlayerOneModal() {
     $('.shadow1').css('display', 'inline-block');
 }
 
-/*function removePlayerOneModal() {
-    $('.shadow1').css('display', 'none');
-}*/
-
 function showPlayerTwoModal() {
     $('.shadow2').css('display', 'inline-block');
 }
-
-/*
-function removePlayerTwoModal() {
-    $('.shadow2').css('display', 'none');
-}
-*/
 
 function playerOneWins() {
     //temp
@@ -247,7 +237,7 @@ function movePiece() {
                 gameBoardArray[newRow - 1][newColumn + 1] = 0;
                 playerOnePoints++
             } else if (player === 1) {
-                gameBoardArray[newRow - 1][newColumn - 1] = 0;
+                gameBoardArray[newRow + 1][newColumn + 1] = 0;
                 playerTwoPoints++
             }
         }
@@ -261,7 +251,7 @@ function movePiece() {
                 gameBoardArray[newRow - 1][newColumn - 1] = 0;
                 playerOnePoints++
             } else if (player === 1) {
-                gameBoardArray[newRow - 1][newColumn + 1] = 0;
+                gameBoardArray[newRow + 1][newColumn - 1] = 0;
                 playerTwoPoints++
             }
         }
