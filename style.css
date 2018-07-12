@@ -198,7 +198,6 @@ div.stats #player2 .capturedPiece {
 }
 
 button {
-    left: 42%;
     display: inline-block;
     padding: 0.35em 1.2em;
     border: 0.1em solid black;
@@ -214,7 +213,7 @@ button {
     text-align: center;
     position: absolute;
     font-size: 20px;
-    left: 80%;
+    left: 75%;
 }
 
 .titleParent{

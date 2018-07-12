@@ -44,8 +44,6 @@ function activateClickHandlers() {
 function checkPlayerTurn() {
     if (player === 0) {
         if (check.hasClass('playerTwo')) {
-            debugger;
-
             firstClickedPosition = null;
             check = null;
             showPlayerOneModal()
@@ -164,9 +162,6 @@ function pieceClicked() {
         check = firstClickedPosition.find('div');
 
         checkPlayerTurn();
-
-        remove();
-
         if (check.hasClass('playerOne') || check.hasClass('playerTwo')) {
 
             var column = firstClickedPosition.attr('columnPosition');
@@ -247,18 +242,18 @@ function movePiece() {
     }
 }
 
-function remove () {
-    // CODE FOR APPENDING PIECE TO STATS
+// function remove () {
+//     // CODE FOR APPENDING PIECE TO STATS
 
-    if(check.hasClass('playerOne')) {
-        $('#player1').append("<div class='capturedPiece'></div>");
-        playerCount1++;
-    };
-    if(check.hasClass('playerTwo')) {
-        $('#player2').append("<div class='capturedPiece'></div>");
-        playerCount2++;
-    };
-  }
+//     if(check.hasClass('playerOne')) {
+//         $('#player1').append("<div class='capturedPiece'></div>");
+//         playerCount1++;
+//     };
+//     if(check.hasClass('playerTwo')) {
+//         $('#player2').append("<div class='capturedPiece'></div>");
+//         playerCount2++;
+//     };
+//   }
 
 
 function checkForWinner(){
@@ -313,15 +308,17 @@ function checkForWinner(){
 function win(){
     if (playerCount1 === all_pieces_captured) {
         // alert('You have won!');
-        congratulations();
-  
+        playerOneWins();  
     } if (playerCount2 === all_pieces_captured) {
         // alert('You have won!');
-        congratulations();
+        playerTwoWins();
     }
 
 }
 
+function resetGame(){
+        window.location.reload();
+}
 
 
 
