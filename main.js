@@ -242,18 +242,18 @@ function movePiece() {
     }
 }
 
-// function remove () {
-//     // CODE FOR APPENDING PIECE TO STATS
+function remove () {
+    // CODE FOR APPENDING PIECE TO STATS
 
-//     if(check.hasClass('playerOne')) {
-//         $('#player1').append("<div class='capturedPiece'></div>");
-//         playerCount1++;
-//     };
-//     if(check.hasClass('playerTwo')) {
-//         $('#player2').append("<div class='capturedPiece'></div>");
-//         playerCount2++;
-//     };
-//   }
+    if(check.hasClass('playerOne')) {
+        $('#player1').append("<div class='capturedPiece'></div>");
+        playerCount1++;
+    };
+    if(check.hasClass('playerTwo')) {
+        $('#player2').append("<div class='capturedPiece'></div>");
+        playerCount2++;
+    };
+  }
 
 
 function checkForWinner(){
@@ -319,7 +319,6 @@ function win(){
 function resetGame(){
         window.location.reload();
 }
-
 
 
 
