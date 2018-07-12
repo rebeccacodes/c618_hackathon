@@ -61,6 +61,47 @@
     background-color: rgba(0, 0, 0, 0.5);
 }
 
+.shadowTwoWinner {
+    position: fixed;
+    left: 0px;
+    top: 0px;
+    display: none;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.shadowOneWinner {
+    position: fixed;
+    left: 0px;
+    top: 0px;
+    display: none;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.PlayerOneWinnerModal {
+    height: 20%;
+    width: 50%;
+    background-color: gold;
+    border: 5px solid white;
+    transform: translate(50%, 50%);
+    text-align: center;
+    font-size: 45px;
+    font-family: "Comic Sans MS";
+}
+.PlayerTwoWinnerModal {
+    height: 20%;
+    width: 50%;
+    background-color: gold;
+    border: 5px solid white;
+    transform: translate(50%, 50%);
+    text-align: center;
+    font-size: 45px;
+    font-family: "Comic Sans MS";
+}
+
 .PlayerOneModal {
     height: 20%;
     width: 50%;
@@ -68,7 +109,9 @@
     border: 5px solid white;
     transform: translate(50%, 50%);
     text-align: center;
-    font-size: 40px;
+    font-size: 45px;
+    font-family: "Comic Sans MS";
+
 }
 
 .PlayerTwoModal {
@@ -78,7 +121,8 @@
     border: 5px solid white;
     transform: translate(50%, 50%);
     text-align: center;
-    font-size: 40px;
+    font-size: 45px;
+    font-family: "Comic Sans MS";
 }
 
 .selected {
