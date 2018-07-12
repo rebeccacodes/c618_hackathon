@@ -1,0 +1,235 @@
+#game-board {
+    height: 600px;
+    width: 600px;
+    margin: auto;
+}
+
+.row {
+    display: flex;
+    height: 12.5%;
+}
+
+.square {
+    display: inline-block;
+    height: 100%;
+    width: 12.5%;
+}
+
+.light {
+    background-color: #ffc600;
+}
+
+.dark {
+    background-color: #2f3a3b;
+}
+
+.checker {
+    height: 75px;
+}
+
+.playerOne {
+    background-image: url("images/black-plain.png");
+    width: 100%;
+    height: 100%;
+    background-size: contain;
+}
+
+.playerTwo {
+    background-image: url("images/white-plain.png");
+    width: 100%;
+    height: 100%;
+    background-size: contain;
+}
+
+.shadow1 {
+    position: fixed;
+    left: 0px;
+    top: 0px;
+    display: none;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.shadow2 {
+    position: fixed;
+    left: 0px;
+    top: 0px;
+    display: none;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.shadowTwoWinner {
+    position: fixed;
+    left: 0px;
+    top: 0px;
+    display: none;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.shadowOneWinner {
+    position: fixed;
+    left: 0px;
+    top: 0px;
+    display: none;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.PlayerOneWinnerModal {
+    height: 20%;
+    width: 50%;
+    background-color: gold;
+    border: 5px solid white;
+    transform: translate(50%, 50%);
+    text-align: center;
+    font-size: 45px;
+    font-family: "Comic Sans MS";
+}
+.PlayerTwoWinnerModal {
+    height: 20%;
+    width: 50%;
+    background-color: gold;
+    border: 5px solid white;
+    transform: translate(50%, 50%);
+    text-align: center;
+    font-size: 45px;
+    font-family: "Comic Sans MS";
+}
+
+.PlayerOneModal {
+    height: 20%;
+    width: 50%;
+    background-color: gold;
+    border: 5px solid white;
+    transform: translate(50%, 50%);
+    text-align: center;
+    font-size: 45px;
+    font-family: "Comic Sans MS";
+
+}
+
+.PlayerTwoModal {
+    height: 20%;
+    width: 50%;
+    background-color: gold;
+    border: 5px solid white;
+    transform: translate(50%, 50%);
+    text-align: center;
+    font-size: 45px;
+    font-family: "Comic Sans MS";
+}
+
+.selected {
+    box-shadow: 0 0 20px 7px white;
+}
+
+.piece:hover {
+    box-shadow: 0 0 20px 7px grey;
+}
+
+div.stats {
+    margin: 50px auto;
+}
+
+div.stats .wrapper {
+    display: flex;
+}
+
+div.stats #player1 {
+    text-align: center;
+    display: inline-block;
+    width: 50%;
+    float: left;
+    background-color: gold;
+    box-sizing: border-box;
+    padding: 20px 20px;
+    border-top-left-radius: 3px;
+    color: black;
+}
+
+div.stats #player1 .capturedPiece {
+    width: 2.4vmin;
+    height: 2.4vmin;
+    background-color: black;
+    background-size: 65%;
+    background-repeat: no-repeat;
+    background-position: center;
+    border-radius: 6vmin;
+    display: inline-block;
+    box-sizing: border-box;
+    transition: all 0.2s linear;
+    margin: 5px;
+}
+
+div.stats #player2 {
+    text-align: center;
+    display: inline-block;
+    width: 50%;
+    float: left;
+    background-color: #2f3a3b;
+    box-sizing: border-box;
+    padding: 20px 20px;
+    border-top-right-radius: 3px;
+    color: white;
+}
+
+div.stats #player2 .capturedPiece {
+    width: 2.4vmin;
+    height: 2.4vmin;
+    background-color: white;
+    background-size: 65%;
+    background-repeat: no-repeat;
+    background-position: center;
+    border-radius: 6vmin;
+    display: inline-block;
+    box-sizing: border-box;
+    transition: all 0.2s linear;
+    margin: 5px;
+}
+
+button {
+    display: inline-block;
+    padding: 0.35em 1.2em;
+    border: 0.1em solid black;
+    margin: auto;
+    border-radius: 10px;
+    box-sizing: border-box;
+    text-decoration: none;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 800;
+    height: 50px;
+    width: 200px;
+    color: black;
+    text-align: center;
+    position: absolute;
+    font-size: 20px;
+
+    left: 75%;
+}
+
+.titleParent{
+    text-align: center;
+
+
+}
+
+.title {
+    text-align: center;
+    font-family: 'Cedarville Cursive', cursive;
+    font-family: 'Chela One', cursive;
+    font-size: 100px;
+}
+
+.piece:hover {
+    box-shadow: 0 0 20px 7px grey;
+}
+
+.highLight {
+    border: 2px solid hotpink;
+}
