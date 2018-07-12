@@ -280,8 +280,6 @@ function movePiece() {
 
         console.log(gameBoardArray);
 
-        checkForWinner(gameBoardArray);
-
         $(possibleMove1).removeClass('highLight');
         $(possibleMove2).removeClass('highLight');
         $(possibleMove3).removeClass('highLight');
