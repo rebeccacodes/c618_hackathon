@@ -11,6 +11,7 @@
 
 .square {
     display: inline-block;
+    box-sizing: border-box;
     height: 100%;
     width: 12.5%;
 }
@@ -220,6 +221,11 @@ button {
     display: flex;
     align-items: center;
     justify-content: center;
+    left: 75%;
+}
+
+.titleParent {
+    text-align: center;
 }
 
 .title {
