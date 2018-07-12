@@ -1,27 +1,14 @@
 $(document).ready(startupGame);
 
-
 //global variables below
-var player = 1;
+var player = 0;
 var firstClickedPosition = null;
-var secondClickedPosition = null;
-var check;
+var check = null;
 var column = null;
 var row = null;
-var x;
-var y;
-
-function startupGame() {
-    buildGameBoard(gameBoardArray);
-    addGamePieces(gameBoardArray);
-    activateClickHandlers();
-}
-
-function activateClickHandlers() {
-    $(".dark").click(movePiece);
-
-}
-
+var possibleMove1;
+var possibleMove2;
+var counter = 0;
 
 var gameBoardArray = [
     [0, 1, 0, 1, 0, 1, 0, 1],
@@ -33,6 +20,61 @@ var gameBoardArray = [
     [0, 2, 0, 2, 0, 2, 0, 2],
     [2, 0, 2, 0, 2, 0, 2, 0]
 ];
+
+function startupGame() {
+    buildGameBoard(gameBoardArray);
+    addGamePieces(gameBoardArray);
+    activateClickHandlers();
+}
+
+function activateClickHandlers() {
+    $(".dark").click(movePiece);
+}
+
+function checkPlayerTurn() {
+
+    if (player === 0) {
+        if (check.hasClass('playerTwo')) {
+            firstClickedPosition = null;
+            check = null;
+            alert("Player One's Turn");
+            // showPlayerTwoModal()
+            // setTimeout(removePlayerTwoModal(), 1000);
+
+        } else {
+
+        }
+    } else if (player === 1) {
+        if (check.hasClass('playerOne')) {
+            firstClickedPosition = null;
+            check = null;
+            alert("Player Two's Turn");
+            // showPlayerOneModal();
+            // setTimeout(removePlayerOneModal(), 1000);
+
+        } else {
+
+        }
+    }
+}
+
+function showPlayerOneModal() {
+    $('.shadow1').addClass('show');
+}
+
+function removePlayerOneModal() {
+    $('.shadow1').removeClass('show');
+}
+
+function showPlayerTwoModal() {
+    $('.shadow2').addClass('show');
+}
+
+function removePlayerTwoModal() {
+    $('.shadow2').removeClass('show');
+}
+
+
 
 function buildGameBoard(array) {
     var gameBoard = $('#game-board');
@@ -88,47 +130,17 @@ function addGamePieces(array) {
     }
 }
 
-function showPlayerOneModal() {
-    $('.shadow1').addClass('show');
-}
-
-function removePlayerOneModal() {
-    $('.shadow1').removeClass('show');
-}
-
-function changePlayer() {
-    if (player = 1) {
-        player = 2;
-        showPlayerOneModal();
-        setTimeout(removePlayerOneModal(), 1000);
-    }
-    if (player = 2) {
-        player = 1;
-        showPlayerTwoModal();
-        setTimeout(removePlayerTwoModal(), 1000);
-    }
-}
-
-
-//NEED TO ADD $(this).removeClass('selected') to MOVE FUNCTION after piece is moved; 
-
-
-var removePiece = function () {
-    // $(this).css("display", "none");
-    gameBoardArray[this.attr("columnPosition")][this.attr("rowPosition")] = 0;
-
-}
 
 
 function movePiece() {
-    //verify whose turn it is
-    console.log('move piece function clicked');
 
     if (firstClickedPosition === null) {
-        firstClickedPosition = $(this);
 
+        firstClickedPosition = $(this);
         check = firstClickedPosition.find('div');
-        // check.removeClass('playerOne');
+
+        checkPlayerTurn();
+
         if (check.hasClass('playerOne') || check.hasClass('playerTwo')) {
 
             var column = firstClickedPosition.attr('columnPosition');
@@ -143,6 +155,9 @@ function movePiece() {
                 var possibleMoveColumnRight = column + 1;
                 var possibleMoveRow = row + 1;
 
+                var possibleMoveRow2 = row + 2;
+                var possibleMoveColumnRight2 = column + 2;
+                var possibleMoveColumnLeft2 = column - 2;
 
             } else if (check.hasClass('playerTwo')) {
 
@@ -150,20 +165,23 @@ function movePiece() {
                 possibleMoveColumnLeft = column - 1;
                 possibleMoveColumnRight = column + 1;
 
+                possibleMoveRow2 = row - 2;
+                possibleMoveColumnLeft2 = column - 2;
+                possibleMoveColumnRight2 = column - 2;
+
             }
 
-            x = $(`div[rowPosition = ${possibleMoveRow}][columnPosition = ${possibleMoveColumnLeft}]`).addClass("highLight");
-            y = $(`div[rowPosition = ${possibleMoveRow}][columnPosition = ${possibleMoveColumnRight}]`).addClass("highLight");
-
+            possibleMove1 = $(`div[rowPosition = ${possibleMoveRow}][columnPosition = ${possibleMoveColumnLeft}]`).addClass("highLight");
+            possibleMove2 = $(`div[rowPosition = ${possibleMoveRow}][columnPosition = ${possibleMoveColumnRight}]`).addClass("highLight");
 
             gameBoardArray[row][column] = 0;
 
-            firstClickedPosition = 1;
-            console.log(gameBoardArray);
+            counter = 1;
 
         }
-    } else if (secondClickedPosition === null) {
+    } else if (firstClickedPosition) {
         secondClickedPosition = $(this);
+        console.log(secondClickedPosition);
         var checkNewSquare = secondClickedPosition.find('div');
         if (checkNewSquare.hasClass('playerOne') || checkNewSquare.hasClass('playerTwo')) {
             console.log('a player is on this spot');
@@ -186,13 +204,13 @@ function movePiece() {
 
             addGamePieces(gameBoardArray);
 
-            $(x).removeClass('highLight');
-            $(y).removeClass('highLight');
+            $(possibleMove1).removeClass('highLight');
+            $(possibleMove2).removeClass('highLight');
 
             firstClickedPosition = null;
-            secondClickedPosition = null;
 
-
+            player = 1 - player;
+            counter = 0;
         }
     }
 }
