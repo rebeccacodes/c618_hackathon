@@ -163,7 +163,6 @@ div.stats #player1 .capturedPiece {
     border-radius: 6vmin;
     display: inline-block;
     box-sizing: border-box;
-    transition: all 0.2s linear;
 }
 
 div.stats #player2 {
@@ -188,7 +187,6 @@ div.stats #player2 .capturedPiece {
     border-radius: 6vmin;
     display: inline-block;
     box-sizing: border-box;
-    transition: all 0.2s linear;
     vertical-align: top;
 }
 
