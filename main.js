@@ -77,7 +77,7 @@ function showPlayerTwoModal() {
 
 function playerOneWins() {
     //temp
-    $('.shadowOneWinner').css('display', 'inline-block');
+    $('.shadowOneWinner').css('display', 'block');
 }
 
 function playerTwoWins() {
@@ -238,12 +238,12 @@ function movePiece() {
             if (player === 0) {
 
                 gameBoardArray[newRow - 1][newColumn + 1] = 0;
-                playerOnePoints++;
+                //playerOnePoints++;
                 $('#player2').append("<div class='capturedPiece'></div>");
 
             } else if (player === 1) {
                 gameBoardArray[newRow + 1][newColumn + 1] = 0;
-                playerTwoPoints++;
+                //playerTwoPoints++;
                 $('#player1').append("<div class='capturedPiece'></div>");
 
 
@@ -257,12 +257,12 @@ function movePiece() {
             checkChildDiv2.removeClass('playerTwo');
             if (player === 0) {
                 gameBoardArray[newRow - 1][newColumn - 1] = 0;
-                playerOnePoints++;
+                //playerOnePoints++;
                 $('#player2').append("<div class='capturedPiece'></div>");
 
             } else if (player === 1) {
                 gameBoardArray[newRow + 1][newColumn - 1] = 0;
-                playerTwoPoints++;
+                //playerTwoPoints++;
                 $('#player1').append("<div class='capturedPiece'></div>");
 
             }
@@ -289,12 +289,13 @@ function movePiece() {
 
         firstClickedPosition = null;
         secondClickedPosition = null;
+        checkForWinner(gameBoardArray);
         //buildGameBoard(gameBoardArray);
         addGamePieces(gameBoardArray);
         player = 1 - player;
         changeP();
         counter = 0;
-        win();
+        //win();
     }
 }
 
@@ -321,53 +322,48 @@ function remove() {
 
 }
 
-// function checkForWinner() {
-//     //while the winner variable is false runs the loop
-//     console.log('this function exists');
-//     var counterOne = 0;
-//     var counterTwo = 0;
-//     while (winner == false) {
-//         console.log('while loop')
-//         for (var i = 0; i < array.length; i++) {
-//             for (var j = 0; j < array.length; j++) {
-//                 if (array[i][j] === 1) {
-//                     counterOne++;
-//                     console.log(counterOne);
-//                 } else if (array[i][j] === 2) {
-//                     while (winner = false) {
-//                         for (var i = 0; i < gameBoardArray.length; i++) {
-//                             for (var j = 0; j < gameBoardArray.length; j++) {
-//                                 if (gameBoardArray[i][j] === 1) {
-//                                     counterOne++;
-//                                     console.log(counterOne);
-//                                 } else if (gameBoardArray[i][j] === 2) {
-//                                     counterTwo++;
-//                                     console.log(counterTwo);
-//                                 }
-//                             }
-//                         }
+function checkForWinner(array) {
+    //while the winner variable is false runs the loop
+    console.log('this function exists');
+    var counterOne = 0;
+    var counterTwo = 0;
+    while (winner == false) {
+        console.log('while loop')
+        for (var i = 0; i < array.length; i++) {
+            for (var j = 0; j < array.length; j++) {
+                if (array[i][j] === 1) {
+                    counterOne++;
+                    console.log('One: ',counterOne);
+                }
+                if (array[i][j] === 2) {
+                    counterTwo++;
+                    console.log('TWO: ',counterTwo);
+                }
+            }
+        }
 
-//                         console.log('hello');
-//                         if (counterOne === 0) {
-//                             if (counterOne === 0) {
-//                                 playerTwoWins();
-//                                 winner = true;
-//                             }
-//                             if (counterTwo === 0) {
-//                                 playerOneWins()
-//                                 winner = true;
-//                             } else {
-//                                 counterOne = 0;
-//                                 counterTwo = 0;
-//                                 console.log('breaking out of loop');
-//                                 break;
-//                             }
-//                         }
-//                     }
-//                 }
-//             }
+        console.log('hello');
+        if (counterOne === 0) {
+            winner = true;
+            $('.shadowTwoWinner').css('display', 'inline-block');
 
+            //playerTwoWins();
+            console.log('player one won');
+        }
+        if (counterTwo === 0) {
+            winner = true;
+            $('.shadowOneWinner').css('display', 'inline-block');
+            //playerOneWins()
+            console.log('player one won')
 
+        } else {
+            counterOne = 0;
+            counterTwo = 0;
+            console.log('breaking out of loop');
+            break;
+        }
+    }
+}
 
 function win() {
     if (playerOnePoints === all_pieces_captured) {
