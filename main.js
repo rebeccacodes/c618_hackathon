@@ -301,11 +301,11 @@ function movePiece() {
 
 function changeP() {
     if (player == 1) {
-        $('.turn').css("background", "linear-gradient(to right, transparent 50%, red 50%)");
+        $('.turn').css("background", "linear-gradient(to right, transparent 50%, white 50%)");
         return;
     }
     if (player == 0) {
-        $('.turn').css("background", "linear-gradient(to right, red 50%, transparent 50%)");
+        $('.turn').css("background", "linear-gradient(to right, white 50%, transparent 50%)");
 
     }
 }

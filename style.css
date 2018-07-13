@@ -1,3 +1,10 @@
+body {
+    background-image: url("images/trees.jpg");
+    background-position: center center;
+    background-repeat:  no-repeat;
+    background-attachment: fixed;
+    background-size:  cover;
+}
 #game-board {
     height: 600px;
     width: 600px;
@@ -193,7 +200,7 @@ div.stats #player2 .capturedPiece {
 div.stats div.turn {
     height: 10px;
     width: 100%;
-    background: linear-gradient(to right, red 50%, transparent 50%);
+    background: linear-gradient(to right, white 50%, transparent 50%);
 }
 
 button {
@@ -231,6 +238,7 @@ button {
     font-family: 'Chela One', cursive;
     font-size: 60px;
     left: 50%;
+    color: white;
 }
 
 .piece:hover {
