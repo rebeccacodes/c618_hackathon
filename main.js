@@ -345,15 +345,12 @@ function checkForWinner(array) {
         console.log('hello');
         if (counterOne === 0) {
             winner = true;
-            $('.shadowTwoWinner').css('display', 'inline-block');
-
-            //playerTwoWins();
+            playerTwoWins();
             console.log('player one won');
         }
         if (counterTwo === 0) {
             winner = true;
-            $('.shadowOneWinner').css('display', 'inline-block');
-            //playerOneWins()
+            playerOneWins()
             console.log('player one won')
 
         } else {
