@@ -141,10 +141,17 @@ function pieceClicked() {
     if (firstClickedPosition === null) {
 
         firstClickedPosition = $(this);
-        console.log("firstClickedPosition ", firstClickedPosition);
+
         check = firstClickedPosition.find('div');
 
         checkPlayerTurn();
+
+        if (!check.hasClass('piece')) {
+            console.log("firstClickedPosition ", firstClickedPosition);
+            firstClickedPosition = null;
+            secondClickedPosition = null;
+            return;
+        }
 
         if (check.hasClass('playerOne') || check.hasClass('playerTwo')) {
 
@@ -216,7 +223,20 @@ function pieceClicked() {
         }
     } else if (secondClickedPosition === null) {
         secondClickedPosition = $(this);
-        movePiece();
+
+        if (!secondClickedPosition.hasClass('highLight')) {
+            console.log("clicked wrong piece");
+            firstClickedPosition = null;
+            secondClickedPosition = null;
+            possibleMove1.removeClass('highLight');
+            possibleMove2.removeClass('highLight');
+            possibleMove3.removeClass('highLight');
+            possibleMove4.removeClass('highLight');
+
+            return;
+        } else {
+            movePiece();
+        }
     }
 }
 
@@ -333,11 +353,11 @@ function checkForWinner(array) {
             for (var j = 0; j < array.length; j++) {
                 if (array[i][j] === 1) {
                     counterOne++;
-                    console.log('One: ',counterOne);
+                    console.log('One: ', counterOne);
                 }
                 if (array[i][j] === 2) {
                     counterTwo++;
-                    console.log('TWO: ',counterTwo);
+                    console.log('TWO: ', counterTwo);
                 }
             }
         }
