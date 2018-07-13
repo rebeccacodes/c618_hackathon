@@ -1,10 +1,12 @@
 body {
     background-image: url("images/trees.jpg");
     background-position: center center;
-    background-repeat:  no-repeat;
+    background-repeat: no-repeat;
     background-attachment: fixed;
-    background-size:  cover;
+    background-size: cover;
+    font-family: Arial, Helvetica, sans-serif;
 }
+
 #game-board {
     height: 600px;
     width: 600px;
@@ -97,7 +99,7 @@ body {
     transform: translate(50%, 50%);
     text-align: center;
     font-size: 45px;
-    font-family: "Comic Sans MS";
+    font-family: 'Chela One', cursive;
 }
 
 .PlayerTwoWinnerModal {
@@ -108,7 +110,7 @@ body {
     transform: translate(50%, 50%);
     text-align: center;
     font-size: 45px;
-    font-family: "Comic Sans MS";
+    font-family: 'Chela One', cursive;
 }
 
 .PlayerOneModal {
@@ -119,7 +121,7 @@ body {
     transform: translate(50%, 50%);
     text-align: center;
     font-size: 45px;
-    font-family: "Comic Sans MS";
+    font-family: 'Chela One', cursive;
 }
 
 .PlayerTwoModal {
@@ -130,7 +132,7 @@ body {
     transform: translate(50%, 50%);
     text-align: center;
     font-size: 45px;
-    font-family: "Comic Sans MS";
+    font-family: 'Chela One', cursive;
 }
 
 .selected {
@@ -151,7 +153,6 @@ div.stats .wrapper {
 
 div.stats #player1 {
     text-align: center;
-    display: inline-block;
     width: 50%;
     float: left;
     background-color: gold;
@@ -176,7 +177,6 @@ div.stats #player2 {
     text-align: center;
     display: inline-block;
     width: 50%;
-    float: left;
     background-color: #2f3a3b;
     box-sizing: border-box;
     padding: 5px 5px;
@@ -211,8 +211,7 @@ button {
     border-radius: 10px;
     box-sizing: border-box;
     text-decoration: none;
-    font-family: 'Roboto', sans-serif;
-    font-weight: 800;
+    font-family: Arial, Helvetica, sans-serif;
     height: 50px;
     width: 200px;
     color: black;
@@ -234,7 +233,6 @@ button {
 }
 
 .title {
-    font-family: 'Cedarville Cursive', cursive;
     font-family: 'Chela One', cursive;
     font-size: 60px;
     left: 50%;
