@@ -9,19 +9,14 @@
     <script src="https://code.jquery.com/jquery-3.3.1.slim.js" integrity="sha256-fNXJFIlca05BIO2Y5zh1xrShK3ME+/lYZ0j+ChxX2DA="
         crossorigin="anonymous"></script>
     <script src="main.js"></script>
-
-
-
 </head>
 
 <body>
-
     <div class="titleParent">
         <div class="title">Checkers</div>
 
         <button type="button" id="resetGame" onClick="resetGame()">Reset Game</button>
     </div>
-
     <div class="stats">
         <div class="wrapper">
             <div id="player2">
@@ -32,10 +27,8 @@
             </div>
         </div>
         <div class="turn"></div>
-
     </div>
     </div>
-
 
     <div id="game-board"></div>
 
@@ -53,8 +46,6 @@
         </div>
     </div>
 
-    
-
     <div id="p1winner" class="shadowOneWinner">
         <div class="PlayerOneWinnerModal">
             <p>Player One Wins</p>
@@ -62,34 +53,12 @@
         </div>
     </div>
 
-
-    <div id= "p2winner" class="shadowTwoWinner">
+    <div id="p2winner" class="shadowTwoWinner">
         <div class="PlayerTwoWinnerModal">
             <p>Player Two Wins</p>
             <button type="button" id="resetGame" onClick="resetGame()">Reset Game</button>
         </div>
     </div>
-
-    <script>
-        var modal = document.getElementById("p1modal")
-        var modalTwo = document.getElementById("p2modal")
-        //var modalThree = document.getElementById("p1winner")
-        //var modalFour = document.getElementById("p2winner")
-        window.onclick = function(event) {
-            if (event.target == modal) {
-                modal.style.display = "none";
-            }
-            if (event.target == modalTwo) {
-                modalTwo.style.display = "none";
-            }
-            /*if (event.target == modalThree) {
-                modalThree.style.display = "none";
-            }
-            if (event.target == modalFour) {
-                modalFour.style.display = "none";
-            }*/
-        }
-    </script>
 
 </body>
 

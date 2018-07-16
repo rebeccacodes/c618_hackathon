@@ -5,23 +5,22 @@ var player = 0;
 var firstClickedPosition = null;
 var secondClickedPosition = null;
 var check = null;
+var secondCheck = null;
 var column = null;
 var row = null;
+
+var newColumn = null;
+var newRow = null;
 var possibleMove1;
 var possibleMove2;
 var possibleMove3;
 var possibleMove4;
-var counter = 0;
 var winner = false;
 
 var checkChildDiv1;
 var checkChildDiv2;
 var checkChildDiv3;
 var checkChildDiv4;
-
-var playerOnePoints = 0;
-var playerTwoPoints = 0;
-var all_pieces_captured = 12;
 
 var gameBoardArray = [
     [0, 1, 0, 1, 0, 1, 0, 1],
@@ -38,53 +37,57 @@ function startupGame() {
     buildGameBoard(gameBoardArray);
     addGamePieces(gameBoardArray);
     activateClickHandlers();
-
-
 }
 
 function activateClickHandlers() {
     $(".dark").click(pieceClicked);
 }
 
+//checks to see which player's turn it is and display's modal if player goes out of turn
 function checkPlayerTurn() {
     if (player === 0) {
         if (check.hasClass('playerTwo')) {
             firstClickedPosition = null;
             check = null;
             showPlayerOneModal()
-        } else {
-            console.log("check passed");
         }
     } else if (player === 1) {
         if (check.hasClass('playerOne')) {
             firstClickedPosition = null;
             check = null;
             showPlayerTwoModal();
-
-        } else {
-            console.log("check passed");
         }
     }
 }
-
+/////////////functions to display various modals//////////////////
 function showPlayerOneModal() {
     $('.shadow1').css('display', 'inline-block');
 }
-
 function showPlayerTwoModal() {
     $('.shadow2').css('display', 'inline-block');
 }
-
 function playerOneWins() {
-    //temp
     $('.shadowOneWinner').css('display', 'block');
 }
-
 function playerTwoWins() {
-    //temp
     $('.shadowTwoWinner').css('display', 'inline-block');
 }
+/////////////////////////////////////////////////////////////////
 
+// click on shadow of modal to remove
+window.onclick = function (event) {
+    var modal = document.getElementById("p1modal");
+    var modalTwo = document.getElementById("p2modal");
+
+    if (event.target == modal) {
+        modal.style.display = "none";
+    }
+    if (event.target == modalTwo) {
+        modalTwo.style.display = "none";
+    }
+
+}
+//loops thru game board two dimensional array to populate the board alternating the colors
 function buildGameBoard(array) {
     var gameBoard = $('#game-board');
     var alternate = 1
@@ -119,6 +122,7 @@ function buildGameBoard(array) {
     }
 }
 
+// displays checkers on the board based on the numbers in the two dimensional array
 function addGamePieces(array) {
     for (var i = 0; i < array.length; i++) {
         for (var j = 0; j < array.length; j++) {
@@ -130,6 +134,10 @@ function addGamePieces(array) {
                 $(storePosition).addClass('playerOne piece');
             } else if (array[i][j] === 2) {
                 $(storePosition).addClass('playerTwo piece');
+            } else if (array[i][j] === 3) {
+                $(storePosition).addClass('playerOneKing piece');
+            } else if (array[i][j] === 4) {
+                $(storePosition).addClass('playerTwoKing piece');
             }
 
         }
@@ -137,189 +145,216 @@ function addGamePieces(array) {
 }
 
 function pieceClicked() {
-    console.log("this right after piece clicked before assigned to variable", this);
+    //check to see if a piece has been clicked
     if (firstClickedPosition === null) {
-
+        //if not, assign current click to firstClickedPosition
         firstClickedPosition = $(this);
-
+        //find child div
         check = firstClickedPosition.find('div');
-
+        //make sure it is the correct player's turn
         checkPlayerTurn();
-
+        //if the piece doesn't have class piece, it isn't valid so exit
         if (!check.hasClass('piece')) {
-            console.log("firstClickedPosition ", firstClickedPosition);
             firstClickedPosition = null;
             secondClickedPosition = null;
             return;
         }
-
+        //if the chip is a valid checker piece
         if (check.hasClass('playerOne') || check.hasClass('playerTwo')) {
-
-            var column = firstClickedPosition.attr('columnPosition');
-            var row = firstClickedPosition.attr('rowPosition');
-            console.log('column row', column, row);
-            column = parseInt(column);
-            row = parseInt(row);
-
-            if (check.hasClass('playerOne')) {
-
-                var possibleMoveColumnLeft = column - 1;
-                var possibleMoveColumnRight = column + 1;
-                var possibleMoveRow = row + 1;
-
-                var possibleMoveRow2 = row + 2;
-                var possibleMoveColumnRight2 = column + 2;
-                var possibleMoveColumnLeft2 = column - 2;
-
-            } else if (check.hasClass('playerTwo')) {
-
-                possibleMoveRow = row - 1;
-                possibleMoveColumnLeft = column - 1;
-                possibleMoveColumnRight = column + 1;
-
-                possibleMoveRow2 = row - 2;
-                possibleMoveColumnLeft2 = column - 2;
-                possibleMoveColumnRight2 = column + 2;
-
-            }
-
-            possibleMove1 = $(`div[rowPosition = ${possibleMoveRow}][columnPosition = ${possibleMoveColumnLeft}]`);
-            possibleMove2 = $(`div[rowPosition = ${possibleMoveRow}][columnPosition = ${possibleMoveColumnRight}]`);
-            possibleMove3 = $(`div[rowPosition = ${possibleMoveRow2}][columnPosition = ${possibleMoveColumnLeft2}]`);
-            possibleMove4 = $(`div[rowPosition = ${possibleMoveRow2}][columnPosition = ${possibleMoveColumnRight2}]`);
-
-            //finding child divs of possible moves
-            checkChildDiv1 = possibleMove1.find('div');
-            checkChildDiv2 = possibleMove2.find('div');
-            checkChildDiv3 = possibleMove3.find('div');
-            checkChildDiv4 = possibleMove4.find('div');
-            //checking if there are pieces on the possible move locations
-
-            if (!checkChildDiv1.hasClass('playerOne') && (!checkChildDiv1.hasClass('playerTwo'))) {
-                possibleMove1.addClass('highLight');
-            }
-            if (!checkChildDiv2.hasClass('playerOne') && (!checkChildDiv2.hasClass('playerTwo'))) {
-                possibleMove2.addClass('highLight');
-            }
-
-            if (checkChildDiv1.hasClass('playerOne') || (checkChildDiv1.hasClass('playerTwo'))) {
-                if (!checkChildDiv3.hasClass('playerOne') && (!checkChildDiv3.hasClass('playerTwo')))
-                    possibleMove3.addClass('highLight');
-                possibleMove3.addClass('jumpLeft');
-
-            }
-
-            if (checkChildDiv2.hasClass('playerOne') || (checkChildDiv2.hasClass('playerTwo'))) {
-                if (!checkChildDiv4.hasClass('playerOne') && (!checkChildDiv4.hasClass('playerTwo')))
-                    possibleMove4.addClass('highLight');
-                possibleMove4.addClass('jumpRight');
-
-            }
-
-            gameBoardArray[row][column] = 0;
-
-            counter = 1;
-
+            //check what moves are available to checker piece
+            possibleMoves();
         }
+        //if the piece clicked is the second piece clicked
     } else if (secondClickedPosition === null) {
+        //assign div clicked to a variable
         secondClickedPosition = $(this);
-
+        //if the second piece clicked doesn't have a class of highlight it is not valid reset clicked variables
         if (!secondClickedPosition.hasClass('highLight')) {
-            console.log("clicked wrong piece");
             firstClickedPosition = null;
             secondClickedPosition = null;
             possibleMove1.removeClass('highLight');
             possibleMove2.removeClass('highLight');
-            possibleMove3.removeClass('highLight');
-            possibleMove4.removeClass('highLight');
-
+            possibleMove3.removeClass('highLight').removeClass('jumpLeft');
+            possibleMove4.removeClass('highLight').removeClass('jumpRight');
             return;
         } else {
+            //if piece clicked is valid, move piece
             movePiece();
         }
     }
 }
 
+function possibleMoves() {
+    //if the chip is a valid checker piece
+    if (check.hasClass('playerOne') || check.hasClass('playerTwo')) {
+        //record the row & column position of clicked chip
+        column = firstClickedPosition.attr('columnPosition');
+        row = firstClickedPosition.attr('rowPosition');
+        column = parseInt(column);
+        row = parseInt(row);
+
+        //gameBoardArray[row][column] = 0;
+
+        //possible column & row changes for player one
+        if (check.hasClass('playerOne')) {
+            var possibleMoveColumnLeft = column - 1;
+            var possibleMoveColumnRight = column + 1;
+            var possibleMoveRow = row + 1;
+
+            var possibleMoveRow2 = row + 2;
+            var possibleMoveColumnRight2 = column + 2;
+            var possibleMoveColumnLeft2 = column - 2;
+            //possible column & row changes for player two
+        } else if (check.hasClass('playerTwo')) {
+            possibleMoveRow = row - 1;
+            possibleMoveColumnLeft = column - 1;
+            possibleMoveColumnRight = column + 1;
+
+            possibleMoveRow2 = row - 2;
+            possibleMoveColumnLeft2 = column - 2;
+            possibleMoveColumnRight2 = column + 2;
+
+        }
+        //possible move combinations for all players
+        possibleMove1 = $(`div[rowPosition = ${possibleMoveRow}][columnPosition = ${possibleMoveColumnLeft}]`);
+        possibleMove2 = $(`div[rowPosition = ${possibleMoveRow}][columnPosition = ${possibleMoveColumnRight}]`);
+        possibleMove3 = $(`div[rowPosition = ${possibleMoveRow2}][columnPosition = ${possibleMoveColumnLeft2}]`);
+        possibleMove4 = $(`div[rowPosition = ${possibleMoveRow2}][columnPosition = ${possibleMoveColumnRight2}]`);
+
+        //finding child divs of possible moves
+        checkChildDiv1 = possibleMove1.find('div');
+        checkChildDiv2 = possibleMove2.find('div');
+        checkChildDiv3 = possibleMove3.find('div');
+        checkChildDiv4 = possibleMove4.find('div');
+
+        //checking if there are pieces on the possible move locations
+        if (!checkChildDiv1.hasClass('playerOne') && (!checkChildDiv1.hasClass('playerTwo'))) {
+            possibleMove1.addClass('highLight');
+        }
+        if (!checkChildDiv2.hasClass('playerOne') && (!checkChildDiv2.hasClass('playerTwo'))) {
+            possibleMove2.addClass('highLight');
+        }
+
+        if (player === 0) {
+            if (checkChildDiv1.hasClass('playerTwo')) {
+                if (!checkChildDiv3.hasClass('playerOne') && (!checkChildDiv3.hasClass('playerTwo')))
+                    possibleMove3.addClass('highLight');
+                possibleMove3.addClass('jumpLeft');
+            }
+        }
+
+        if (player === 1) {
+            if (checkChildDiv1.hasClass('playerOne')) {
+                if (!checkChildDiv3.hasClass('playerOne') && (!checkChildDiv3.hasClass('playerTwo')))
+                    possibleMove3.addClass('highLight');
+                possibleMove3.addClass('jumpLeft');
+            }
+        }
+
+        if (player === 0) {
+            if (checkChildDiv2.hasClass('playerTwo')) {
+                if (!checkChildDiv4.hasClass('playerOne') && (!checkChildDiv4.hasClass('playerTwo')))
+                    possibleMove4.addClass('highLight');
+                possibleMove4.addClass('jumpRight');
+
+            }
+        }
+
+        if (player === 1) {
+            if (checkChildDiv2.hasClass('playerOne')) {
+                if (!checkChildDiv4.hasClass('playerOne') && (!checkChildDiv4.hasClass('playerTwo')))
+                    possibleMove4.addClass('highLight');
+                possibleMove4.addClass('jumpRight');
+            }
+        }
+    }
+
+}
+
 function movePiece() {
-
-    var checkNewSquare = secondClickedPosition.find('div');
+    //check for class of highlight to make sure it it is valid move
     if (secondClickedPosition.hasClass('highLight')) {
-
-        var newColumn = secondClickedPosition.attr('columnPosition');
-        var newRow = secondClickedPosition.attr('rowPosition');
+        //get row and column attributes of the move
+        newColumn = secondClickedPosition.attr('columnPosition');
+        newRow = secondClickedPosition.attr('rowPosition');
         newColumn = parseInt(newColumn);
         newRow = parseInt(newRow);
 
+        secondCheck = secondClickedPosition.find('div');
+        gameBoardArray[row][column] = 0;
+        //check for king
+        checkForKing();
+
         if (secondClickedPosition.hasClass('jumpLeft')) {
-            console.log('you were jumped');
-            console.log("checkChildDiv1", checkChildDiv1)
+            //if second div clicked has class of jumpLeft, remove player classes od the div that this move jumps over
             checkChildDiv1.removeClass('playerOne');
             checkChildDiv1.removeClass('playerTwo');
+            //depending on whose turn it is, will determine location of div to set to zero in the array
+            //then we update the scoreboard by adding capturedPiece class and appending to scoreboard
             if (player === 0) {
-
                 gameBoardArray[newRow - 1][newColumn + 1] = 0;
-                //playerOnePoints++;
                 $('#player2').append("<div class='capturedPiece'></div>");
-
             } else if (player === 1) {
                 gameBoardArray[newRow + 1][newColumn + 1] = 0;
-                //playerTwoPoints++;
                 $('#player1').append("<div class='capturedPiece'></div>");
-
-
             }
         }
-
         if (secondClickedPosition.hasClass('jumpRight')) {
-            console.log('you were jumped');
-            console.log("checkChildDiv2", checkChildDiv2)
+            //if second div clicked has class of jumpeRight, remove player classes of the div that this move jumps over
             checkChildDiv2.removeClass('playerOne');
             checkChildDiv2.removeClass('playerTwo');
+            //depending on whose turn it is, will determine location of div that was jumped & to set to zero in the array
+            //then we update the scoreboard by adding capturedPiece class and appending to scoreboard
             if (player === 0) {
                 gameBoardArray[newRow - 1][newColumn - 1] = 0;
-                //playerOnePoints++;
                 $('#player2').append("<div class='capturedPiece'></div>");
-
             } else if (player === 1) {
                 gameBoardArray[newRow + 1][newColumn - 1] = 0;
-                //playerTwoPoints++;
                 $('#player1').append("<div class='capturedPiece'></div>");
 
             }
         }
+        //determines who is current player so the array is updated with the correct number
 
+        if (check.hasClass('playerOneKing')) {
+            check.removeClass('playerOne');
+            gameBoardArray[newRow][newColumn] = 3;
 
-
-        if (check.hasClass('playerOne')) {
+        } else if (check.hasClass('playerOne')) {
             gameBoardArray[newRow][newColumn] = 1;
+
+        } else if (check.hasClass('playerTwoKing')) {
+            check.removeClass('playerTwo');
+            gameBoardArray[newRow][newColumn] = 4;
+
         } else if (check.hasClass('playerTwo')) {
             gameBoardArray[newRow][newColumn] = 2;
         }
 
+        //removes player class on firstPieceClicked so that the piece will no longer appear in the old spot when the gameboard is updated
         check.removeClass('playerOne');
         check.removeClass('playerTwo');
-
-
-        console.log(gameBoardArray);
-
+        //removes the classes of highlight and jumpLeft / jumpRight to reset
         $(possibleMove1).removeClass('highLight');
         $(possibleMove2).removeClass('highLight');
-        $(possibleMove3).removeClass('highLight');
-        $(possibleMove4).removeClass('highLight');
-
+        $(possibleMove3).removeClass('highLight').removeClass('jumpLeft');
+        $(possibleMove4).removeClass('highLight').removeClass('jumpRight');
+        //resets clicks
         firstClickedPosition = null;
         secondClickedPosition = null;
+
+        //checks for winning condiition
         checkForWinner(gameBoardArray);
-        //buildGameBoard(gameBoardArray);
+        //updates game pieces on board
         addGamePieces(gameBoardArray);
+        //changes player turns
         player = 1 - player;
+        //runs function that shows whose turn it currently is
         changeP();
-        counter = 0;
-        //win();
+
     }
 }
-
-
+//switches white bar back and forth to indicate player turn
 function changeP() {
     if (player == 1) {
         $('.turn').css("background", "linear-gradient(to right, transparent 50%, white 50%)");
@@ -331,89 +366,60 @@ function changeP() {
     }
 }
 
-function remove() {
-    // CODE FOR APPENDING PIECE TO STATS
-    if (player === 0) {
-        $('#player2').append("<div class='capturedPiece'></div>")
-    };
-    if (player === 1) {
-        $('#player1').append("<div class='capturedPiece'></div>")
-    };
+function checkForKing() {
+    var kingRow = secondClickedPosition.attr('rowPosition');
+    var kingCol = secondClickedPosition.attr('columnPosition');
 
+    if (player === 0) {
+
+        if (secondClickedPosition.attr('rowPosition') == 7) {
+            gameBoardArray[kingRow][kingCol] = 3;
+            $(secondCheck).removeClass('playerOne').addClass('playerOneKing');
+            secondClickedPosition.removeClass('jumpLeft').removeClass('jumpRight');
+            console.log(gameBoardArray);
+        }
+    }
+    if (player === 1) {
+
+        if (secondClickedPosition.attr('rowPosition') == 0) {
+            gameBoardArray[kingRow][kingCol] = 4;
+            $(secondCheck).removeClass('playerTwo').addClass('playerTwoKing');
+            secondClickedPosition.removeClass('jumpLeft').removeClass('jumpRight');
+            console.log(gameBoardArray);
+        }
+    }
+    return;
 }
 
 function checkForWinner(array) {
     //while the winner variable is false runs the loop
-    console.log('this function exists');
     var counterOne = 0;
     var counterTwo = 0;
     while (winner == false) {
-        console.log('while loop')
         for (var i = 0; i < array.length; i++) {
             for (var j = 0; j < array.length; j++) {
                 if (array[i][j] === 1) {
                     counterOne++;
-                    console.log('One: ', counterOne);
                 }
                 if (array[i][j] === 2) {
                     counterTwo++;
-                    console.log('TWO: ', counterTwo);
                 }
             }
         }
-
-        console.log('hello');
         if (counterOne === 0) {
             winner = true;
             playerTwoWins();
-            console.log('player one won');
         }
         if (counterTwo === 0) {
             winner = true;
             playerOneWins()
-            console.log('player one won')
-
         } else {
             counterOne = 0;
             counterTwo = 0;
-            console.log('breaking out of loop');
             break;
         }
     }
 }
-
-function win() {
-    if (playerOnePoints === all_pieces_captured) {
-        // alert('You have won!');
-        playerOneWins();
-    }
-    if (playerTwoPoints === all_pieces_captured) {
-        // alert('You have won!');
-        playerTwoWins();
-    }
-
-}
-
-
-
-
-
-// function selected() {
-//     var selected;
-//     var playerTurn = ($(this).attr("class").split(' ')[0]);
-//     if (playerTurn) {
-//         if ($(this).hasClass('selected')) {
-//             selected = true;
-//             $('.piece').each(function (index) {
-//                 $('.piece').eq(index).removeClass('selected')
-//             })
-//         };
-//         if (!selected) {
-//             $(this).addClass('selected');
-//         }
-//     }
-// }
-
 
 function resetGame() {
     window.location.reload();
