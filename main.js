@@ -375,7 +375,7 @@ function checkForKing() {
         if (secondClickedPosition.attr('rowPosition') == 7) {
             gameBoardArray[kingRow][kingCol] = 3;
             $(secondCheck).removeClass('playerOne').addClass('playerOneKing');
-            secondClickedPosition.removeClass('jumpLeft').removeClass('jumpRight');
+            //secondClickedPosition.removeClass('jumpLeft').removeClass('jumpRight');
             console.log(gameBoardArray);
         }
     }
@@ -384,7 +384,7 @@ function checkForKing() {
         if (secondClickedPosition.attr('rowPosition') == 0) {
             gameBoardArray[kingRow][kingCol] = 4;
             $(secondCheck).removeClass('playerTwo').addClass('playerTwoKing');
-            secondClickedPosition.removeClass('jumpLeft').removeClass('jumpRight');
+            //secondClickedPosition.removeClass('jumpLeft').removeClass('jumpRight');
             console.log(gameBoardArray);
         }
     }
