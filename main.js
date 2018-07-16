@@ -227,22 +227,43 @@ function possibleMoves() {
             possibleMove2.addClass('highLight');
         }
 
-        if (checkChildDiv1.hasClass('playerOne') || (checkChildDiv1.hasClass('playerTwo'))) {
-            if (!checkChildDiv3.hasClass('playerOne') && (!checkChildDiv3.hasClass('playerTwo')))
-                possibleMove3.addClass('highLight');
-            possibleMove3.addClass('jumpLeft');
-
+        if (player === 0) {
+            if (checkChildDiv1.hasClass('playerTwo')) {
+                if (!checkChildDiv3.hasClass('playerOne') && (!checkChildDiv3.hasClass('playerTwo')))
+                    possibleMove3.addClass('highLight');
+                possibleMove3.addClass('jumpLeft');
+            }
         }
 
-        if (checkChildDiv2.hasClass('playerOne') || (checkChildDiv2.hasClass('playerTwo'))) {
-            if (!checkChildDiv4.hasClass('playerOne') && (!checkChildDiv4.hasClass('playerTwo')))
-                possibleMove4.addClass('highLight');
-            possibleMove4.addClass('jumpRight');
+        if (player === 1) {
+            if (checkChildDiv1.hasClass('playerOne')) {
+                if (!checkChildDiv3.hasClass('playerOne') && (!checkChildDiv3.hasClass('playerTwo')))
+                    possibleMove3.addClass('highLight');
+                possibleMove3.addClass('jumpLeft');
+            }
+        }
 
+        if (player === 0) {
+            if (checkChildDiv2.hasClass('playerTwo')) {
+                if (!checkChildDiv4.hasClass('playerOne') && (!checkChildDiv4.hasClass('playerTwo')))
+                    possibleMove4.addClass('highLight');
+                possibleMove4.addClass('jumpRight');
+
+            }
+        }
+
+        if (player === 1) {
+            if (checkChildDiv2.hasClass('playerOne')) {
+                if (!checkChildDiv4.hasClass('playerOne') && (!checkChildDiv4.hasClass('playerTwo')))
+                    possibleMove4.addClass('highLight');
+                possibleMove4.addClass('jumpRight');
+            }
         }
     }
 
 }
+
+
 
 function movePiece() {
     //check for class of highlight to make sure it it is valid move
