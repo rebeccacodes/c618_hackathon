@@ -5,8 +5,12 @@ var player = 0;
 var firstClickedPosition = null;
 var secondClickedPosition = null;
 var check = null;
+var secondCheck = null;
 var column = null;
 var row = null;
+
+var newColumn = null;
+var newRow = null;
 var possibleMove1;
 var possibleMove2;
 var possibleMove3;
@@ -130,6 +134,10 @@ function addGamePieces(array) {
                 $(storePosition).addClass('playerOne piece');
             } else if (array[i][j] === 2) {
                 $(storePosition).addClass('playerTwo piece');
+            } else if (array[i][j] === 3) {
+                $(storePosition).addClass('playerOneKing piece');
+            } else if (array[i][j] === 4) {
+                $(storePosition).addClass('playerTwoKing piece');
             }
 
         }
@@ -180,12 +188,12 @@ function possibleMoves() {
     //if the chip is a valid checker piece
     if (check.hasClass('playerOne') || check.hasClass('playerTwo')) {
         //record the row & column position of clicked chip
-        var column = firstClickedPosition.attr('columnPosition');
-        var row = firstClickedPosition.attr('rowPosition');
+        column = firstClickedPosition.attr('columnPosition');
+        row = firstClickedPosition.attr('rowPosition');
         column = parseInt(column);
         row = parseInt(row);
-        //why do i get null if i place this in the move function --- row and column are global variables
-        gameBoardArray[row][column] = 0;
+
+        //gameBoardArray[row][column] = 0;
 
         //possible column & row changes for player one
         if (check.hasClass('playerOne')) {
@@ -218,8 +226,8 @@ function possibleMoves() {
         checkChildDiv2 = possibleMove2.find('div');
         checkChildDiv3 = possibleMove3.find('div');
         checkChildDiv4 = possibleMove4.find('div');
-        //checking if there are pieces on the possible move locations
 
+        //checking if there are pieces on the possible move locations
         if (!checkChildDiv1.hasClass('playerOne') && (!checkChildDiv1.hasClass('playerTwo'))) {
             possibleMove1.addClass('highLight');
         }
@@ -263,18 +271,22 @@ function possibleMoves() {
 
 }
 
-
-
 function movePiece() {
     //check for class of highlight to make sure it it is valid move
     if (secondClickedPosition.hasClass('highLight')) {
         //get row and column attributes of the move
-        var newColumn = secondClickedPosition.attr('columnPosition');
-        var newRow = secondClickedPosition.attr('rowPosition');
+        newColumn = secondClickedPosition.attr('columnPosition');
+        newRow = secondClickedPosition.attr('rowPosition');
         newColumn = parseInt(newColumn);
         newRow = parseInt(newRow);
+
+        secondCheck = secondClickedPosition.find('div');
+        gameBoardArray[row][column] = 0;
+        //check for king
+        checkForKing();
+
         if (secondClickedPosition.hasClass('jumpLeft')) {
-            //if second div clicked has class of jumpLeft, remove player classes od the div that this move will jump over
+            //if second div clicked has class of jumpLeft, remove player classes od the div that this move jumps over
             checkChildDiv1.removeClass('playerOne');
             checkChildDiv1.removeClass('playerTwo');
             //depending on whose turn it is, will determine location of div to set to zero in the array
@@ -288,10 +300,10 @@ function movePiece() {
             }
         }
         if (secondClickedPosition.hasClass('jumpRight')) {
-            //if second div clicked has class of jumpeRight, remove player classes of the div that this move will jump over
+            //if second div clicked has class of jumpeRight, remove player classes of the div that this move jumps over
             checkChildDiv2.removeClass('playerOne');
             checkChildDiv2.removeClass('playerTwo');
-            //depending on whose turn it is, will determine location of div to set to zero in the array
+            //depending on whose turn it is, will determine location of div that was jumped & to set to zero in the array
             //then we update the scoreboard by adding capturedPiece class and appending to scoreboard
             if (player === 0) {
                 gameBoardArray[newRow - 1][newColumn - 1] = 0;
@@ -303,11 +315,22 @@ function movePiece() {
             }
         }
         //determines who is current player so the array is updated with the correct number
-        if (check.hasClass('playerOne')) {
+
+        if (check.hasClass('playerOneKing')) {
+            check.removeClass('playerOne');
+            gameBoardArray[newRow][newColumn] = 3;
+
+        } else if (check.hasClass('playerOne')) {
             gameBoardArray[newRow][newColumn] = 1;
+
+        } else if (check.hasClass('playerTwoKing')) {
+            check.removeClass('playerTwo');
+            gameBoardArray[newRow][newColumn] = 4;
+
         } else if (check.hasClass('playerTwo')) {
             gameBoardArray[newRow][newColumn] = 2;
         }
+
         //removes player class on firstPieceClicked so that the piece will no longer appear in the old spot when the gameboard is updated
         check.removeClass('playerOne');
         check.removeClass('playerTwo');
@@ -319,6 +342,7 @@ function movePiece() {
         //resets clicks
         firstClickedPosition = null;
         secondClickedPosition = null;
+
         //checks for winning condiition
         checkForWinner(gameBoardArray);
         //updates game pieces on board
@@ -340,6 +364,31 @@ function changeP() {
         $('.turn').css("background", "linear-gradient(to right, white 50%, transparent 50%)");
 
     }
+}
+
+function checkForKing() {
+    var kingRow = secondClickedPosition.attr('rowPosition');
+    var kingCol = secondClickedPosition.attr('columnPosition');
+
+    if (player === 0) {
+
+        if (secondClickedPosition.attr('rowPosition') == 7) {
+            gameBoardArray[kingRow][kingCol] = 3;
+            $(secondCheck).removeClass('playerOne').addClass('playerOneKing');
+            secondClickedPosition.removeClass('jumpLeft').removeClass('jumpRight');
+            console.log(gameBoardArray);
+        }
+    }
+    if (player === 1) {
+
+        if (secondClickedPosition.attr('rowPosition') == 0) {
+            gameBoardArray[kingRow][kingCol] = 4;
+            $(secondCheck).removeClass('playerTwo').addClass('playerTwoKing');
+            secondClickedPosition.removeClass('jumpLeft').removeClass('jumpRight');
+            console.log(gameBoardArray);
+        }
+    }
+    return;
 }
 
 function checkForWinner(array) {
